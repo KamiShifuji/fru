@@ -452,3 +452,15 @@ svg.spark { display: block; margin-left: auto; }
 @media (max-width: 1100px) { .fplayers { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 860px) { .fmech { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .fplayers { grid-template-columns: 1fr; } }
+
+/* P3 Prog-Point (Fatale Relativität / Apokalypse) */
+.p3prog{border:1px solid rgba(224,177,92,.55);border-radius:14px;padding:4px 16px 12px;margin:18px 0 26px;
+  background:linear-gradient(180deg,rgba(224,177,92,.10),rgba(224,177,92,.02))}
+.p3prog>h2{margin-top:14px}
+.p3grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr))}
+.p3card{position:relative;border-color:rgba(224,177,92,.7)!important;box-shadow:0 0 0 1px rgba(224,177,92,.25)}
+.p3flag{position:absolute;top:10px;right:12px;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:#1b1b1b;background:#e0b15c;border-radius:999px;padding:2px 9px}
+.p3card h3{padding-right:96px}
+.p3spots table td,.p3spots table th{white-space:normal}
+.p3focus{border-left:3px solid #e0b15c}
