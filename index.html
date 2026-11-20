@@ -7,7 +7,7 @@
 <meta name="robots" content="index,follow">
 <title>FRU · Static Prog-Stats</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=8b726f3e18">
 </head>
 <body class="home">
 <a class="skip" href="#main">Zum Inhalt</a>
@@ -27,12 +27,12 @@
     </nav>
   </div>
 </header>
-<section class="hero" aria-label="Fan-Art (KI-generiert): Orakel der Finsternis">
-  <img src="assets/hero.jpg" alt="Fan-Art (KI-generiert): Orakel der Finsternis" width="1280" height="720">
-  <div class="hero-overlay" aria-hidden="true"></div>
-  <p class="hero-cap"><span class="wrap">Fan-Art (KI-generiert): Orakel der Finsternis</span></p>
-</section>
 <main id="main" class="wrap">
+  <section class="hero" aria-label="Fan-Art (KI-generiert): Orakel der Finsternis">
+    <img src="assets/hero.jpg" alt="Fan-Art (KI-generiert): Orakel der Finsternis" width="1280" height="360">
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <p class="hero-cap">Fan-Art (KI-generiert): Orakel der Finsternis</p>
+  </section>
   <h1>Static-Prog im Überblick</h1>
   <p class="lede">
     Alle Zahlen stammen aus den hochgeladenen FFLogs/Tomestone-Logs und zählen
@@ -54,7 +54,7 @@
   <p class="note">Erster P2 nach 26 Pulls (04.10, Pull 8, 3:36, Boss 80 %). Erster P3 nach 162 Pulls (29.10, Pull 20, 8:04, Boss 84 %). Boss-HP ist der verbleibende Lebenspunkte-Anteil des Bosses der erreichten Phase beim Wipe (niedriger = weiter). Hinweis zur Uhrzeit: 25.10 (früh) Start 19:06 (früher als 20:00). Der 25.10. bleibt ein Static-Sonntag und ist zu einem Abend zusammengefasst.</p>
   <div class="actions"><a class='btn' href='pdf/FRU_Prog_Analyse.pdf'>Gesamt-PDF herunterladen</a></div>
 
-<div class='clear-head' id='clear-best'><div class='k'>Bester Pull bisher</div><div class='num'>51,8&nbsp;% zum Clear</div><div class='sub'>P3 · 41 % · 15.11.2026 · Pull 10 · 9:28</div><div class='clear-track' aria-hidden='true'><span class='fill' style='width:51.8%'></span></div><div class='clear-ticks'><span>0 · P1</span><span>P2</span><span>P3</span><span>P4</span><span>P5</span><span>Clear</span></div></div>
+<div class='clear-head' id='clear-best'><div class='k'>Bester Pull bisher</div><div class='num'>51,8&nbsp;% zum Clear</div><div class='sub'>P3 · 41 % · 15.11.2026 · Pull 10 · 9:28</div><div class='clear-track' aria-hidden='true'><span class='fill' style='width:51.8%'></span><span class='tick' style='left:20%'></span><span class='tick' style='left:40%'></span><span class='tick' style='left:60%'></span><span class='tick' style='left:80%'></span></div><div class='clear-ticks'><span>0 · P1</span><span>P2</span><span>P3</span><span>P4</span><span>P5</span><span>Clear</span></div></div>
 
   <h2 id="fortschritt">Fortschritt bis zum Clear (0–100 %)</h2>
   <div class="card"><div class="chart-box"><canvas id="chartClear" aria-label="Fortschritt bis zum Clear über die Abende"></canvas></div>
@@ -137,6 +137,6 @@
 
 <script type="application/json" id="chart-data">{"labels": ["01.10", "04.10", "15.10", "18.10", "25.10", "29.10", "01.11", "03.11", "05.11", "08.11", "12.11", "15.11", "17.11", "19.11"], "p2": [0.0, 14.7, 50.0, 50.0, 50.0, 50.0, 23.1, 77.8, 60.0, 66.7, 64.7, 55.6, 69.2, 70.6], "p3": [0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 7.7, 16.7, 5.0, 25.0, 23.5, 27.8, 23.1, 41.2], "bestPhase": ["P1", "P2", "P2", "P2", "P2", "P3", "P3", "P3", "P3", "P3", "P3", "P3", "P3", "P3"], "bestBoss": [23.0, 79.0, 43.0, 37.0, 14.0, 84.0, 80.0, 81.0, 81.0, 50.0, 76.0, 41.0, 42.0, 54.0], "bestPull": [16, 31, 14, 16, 34, 20, 7, 18, 7, 7, 17, 10, 11, 6], "clearProg": [15.4, 24.2, 31.4, 32.6, 37.2, 43.2, 44.0, 43.8, 43.8, 50.0, 44.8, 51.8, 51.6, 49.2], "phaseHp": {"P1": [23.0, 2.5, 5.9, 2.5, 0.9, 0.6, 14.0, 5.0, 0.8, 28.0, 0.1, 4.6, 5.7, 12.0], "P2": [null, 79.0, 43.0, 37.0, 14.0, 30.0, 23.0, 15.0, 15.0, 31.0, 20.0, 21.0, 19.0, 15.0], "P3": [null, null, null, null, null, 84.0, 80.0, 81.0, 81.0, 50.0, 76.0, 41.0, 42.0, 54.0]}, "phaseHpColors": {"P1": "#e07a5f", "P2": "#5b9bd5", "P3": "#9b6bdb", "P4": "#e0b15c", "P5": "#3dbe8c"}, "phaseHpFills": {"P1": "rgba(224,122,95,.12)", "P2": "rgba(91,155,213,.12)", "P3": "rgba(155,107,219,.12)", "P4": "rgba(224,177,92,.12)", "P5": "rgba(61,190,140,.12)"}, "phase": {"labels": ["P1", "P2", "P3"], "values": [151, 111, 28], "colors": ["#e07a5f", "#5b9bd5", "#9b6bdb"]}, "causes": {"labels": ["P1 Schockpatrone/Sündenglut", "P2 Diamantenstaub", "P2 Überflutendes Licht – Fluch des Lichts", "P1 Brandschlag/Todesmal", "P1 Türme (Detonation)", "P2 Überflutendes Licht – Rest", "P1 Stetes Pulvermal #1", "P3 Fatale Relativität", "P1 Paradiestrennung", "P2 Spiegelland", "P2 Absoluter Nullpunkt [DPS]", "P1 Stetes Pulvermal #2"], "values": [41, 26, 22, 21, 20, 20, 18, 18, 15, 15, 15, 13]}, "deaths": {"labels": ["Kami (MT)", "Yashiro (OT)", "Freyja (H1)", "Sam (H2)", "Rinari (M1)", "Lunia (M2)", "Ayne (R1)", "Vincent (R2)"], "values": [2.34, 2.97, 1.76, 1.31, 1.86, 3.78, 1.48, 1.84], "colors": ["#4a90c3", "#7eb6e0", "#3dbe8c", "#7dd39a", "#e07a5f", "#e0b15c", "#c45c6c", "#d98b4a"]}}</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<script src="js/charts.js"></script>
+<script src="js/charts.js?v=28721fb4e8"></script>
 </body>
 </html>
