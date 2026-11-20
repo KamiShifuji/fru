@@ -7,6 +7,6 @@
 - Repository: https://github.com/KamiShifuji/fru
 - Nur Static-Abende (Dienstag, Donnerstag, Sonntag).
 - Zahlen kommen aus FFLogs/Tomestone-Logs, nichts wird geschätzt.
-- Datenzeitraum aktuell: 01.10.2026–19.11.2026 · 290 Pulls · 14 Abende.
+- Datenzeitraum aktuell: 01.10.2026–19.11.2026 · 277 Pulls · 13 Abende.
 
 Inoffizielle Fan-Seite – FINAL FANTASY XIV © SQUARE ENIX
