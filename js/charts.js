@@ -44,32 +44,41 @@
   }
 
   const best = document.getElementById('chartBest');
-  if (best) {
-    const colors = data.bestPhase.map(p => p === 'P3' ? '#9b6bdb' : p === 'P2' ? '#5b9bd5' : '#e07a5f');
+  if (best && data.phaseHp) {
+    const colors = data.phaseHpColors || { P1: '#e07a5f', P2: '#5b9bd5', P3: '#9b6bdb', P4: '#e0b15c', P5: '#3dbe8c' };
+    const fills = data.phaseHpFills || {};
+    const order = ['P1', 'P2', 'P3', 'P4', 'P5'];
+    const present = order.filter(function (ph) { return Object.prototype.hasOwnProperty.call(data.phaseHp, ph); });
+    const legendTitle = present.join(' / ') + ' – niedrigste Boss-HP';
+    const datasets = present.map(function (ph) {
+      return {
+        label: ph,
+        data: data.phaseHp[ph],
+        borderColor: colors[ph],
+        backgroundColor: fills[ph] || 'transparent',
+        tension: .2,
+        spanGaps: false,
+        fill: false,
+        pointRadius: 5,
+        pointBackgroundColor: colors[ph],
+        pointBorderColor: '#090b10'
+      };
+    });
     new Chart(best, {
       type: 'line',
-      data: {
-        labels: data.labels,
-        datasets: [{
-          label: 'Boss-HP des besten Pulls (niedriger = weiter, innerhalb derselben Phase)',
-          data: data.bestBoss,
-          borderColor: '#e0b15c',
-          backgroundColor: 'rgba(224,177,92,.12)',
-          tension: .2, spanGaps: true, pointRadius: 5, pointBackgroundColor: colors, pointBorderColor: '#090b10'
-        }]
-      },
+      data: { labels: data.labels, datasets: datasets },
       options: {
         responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
         plugins: {
+          title: { display: true, text: legendTitle, color: '#e8eaed', font: { size: 13, weight: '600' } },
           legend: { labels: { color: '#e8eaed' } },
           tooltip: {
             callbacks: {
               label: function (ctx) {
-                const i = ctx.dataIndex;
-                const ph = data.bestPhase[i];
                 const hp = ctx.raw;
-                const hpTxt = (hp === null || hp === undefined) ? 'unbekannt' : (String(hp).replace('.', ',') + ' %');
-                return ph + ' · ' + hpTxt + ' · Pull ' + data.bestPull[i];
+                const hpTxt = (hp === null || hp === undefined) ? 'kein Wert' : (String(hp).replace('.', ',') + ' %');
+                return ctx.dataset.label + ' · niedrigste Boss-HP: ' + hpTxt;
               }
             }
           }
