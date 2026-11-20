@@ -21,7 +21,7 @@
   --shadow: 0 8px 28px rgba(0,0,0,.28);
   --font: "Segoe UI", "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --mono: "Segoe UI Mono", "ui-monospace", "SFMono-Regular", Menlo, Consolas, monospace;
-  --max: 1120px;
+  --max: min(1600px, 94vw);
 }
 * { box-sizing: border-box; }
 img { max-width: 100%; height: auto; }
@@ -105,7 +105,7 @@ h1 { font-size: clamp(1.5rem, 3vw, 2.05rem); font-weight: 750; }
 h2 { font-size: 1.25rem; margin-top: 2.2rem; padding-bottom: .35rem;
      border-bottom: 1px solid var(--line-soft); }
 h3 { font-size: 1.02rem; color: var(--text); }
-.lede { color: var(--muted); font-size: 1.02rem; max-width: 62ch; }
+.lede { color: var(--muted); font-size: 1.02rem; max-width: 110ch; }
 
 .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 1rem 0 0; }
 .pill {
