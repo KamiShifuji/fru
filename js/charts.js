@@ -203,14 +203,23 @@
 
   const causes = document.getElementById('chartCauses');
   if (causes) {
-    const cols = data.causes.labels.map(l => l.startsWith('P3') ? '#9b6bdb' : (l.startsWith('P2') || l.startsWith('Zwischen')) ? '#5b9bd5' : l.startsWith('P1') ? '#e07a5f' : '#6b7382');
+    const causeKey = function (l) {
+      return Array.isArray(l) ? l.join(' ') : String(l);
+    };
+    const cols = data.causes.labels.map(function (l) {
+      const s = causeKey(l);
+      return s.startsWith('P3') ? '#9b6bdb' : (s.startsWith('P2') || s.startsWith('Zwischen')) ? '#5b9bd5' : s.startsWith('P1') ? '#e07a5f' : '#6b7382';
+    });
     new Chart(causes, {
       type: 'bar',
       data: { labels: data.causes.labels, datasets: [{ label: 'Wipes', data: data.causes.values, backgroundColor: cols, borderWidth: 0 }] },
       options: {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { x: { grid: grid, ticks: { precision: 0 } }, y: { grid: { display: false } } }
+        scales: {
+          x: { grid: grid, ticks: { precision: 0 } },
+          y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11 } } }
+        }
       }
     });
   }
