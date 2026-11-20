@@ -22,7 +22,8 @@
         const pt = chart.getDatasetMeta(0).data[bestIdx];
         if (!pt) return;
         const ctx = chart.ctx;
-        const txt = 'Rekord: ' + String(bestVal).replace('.', ',') + ' % (' + data.labels[bestIdx] + ')';
+        const valTxt = String(bestVal).replace('.', ',') + ' %';
+        const txt = (chart.width < 520) ? ('Rekord ' + valTxt) : ('Rekord: ' + valTxt + ' (' + data.labels[bestIdx] + ')');
         ctx.save();
         ctx.font = '700 12px "Segoe UI", system-ui, sans-serif';
         const w = ctx.measureText(txt).width + 14;
