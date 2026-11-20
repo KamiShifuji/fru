@@ -7,6 +7,91 @@
   Chart.defaults.font.family = '"Segoe UI", system-ui, sans-serif';
   const grid = { color: '#1f2430' };
 
+  const clear = document.getElementById('chartClear');
+  if (clear && data.clearProg) {
+    const phaseGuides = {
+      id: 'phaseGuides',
+      afterDraw: function (chart) {
+        const y = chart.scales.y;
+        const area = chart.chartArea;
+        if (!y || !area) return;
+        const ctx = chart.ctx;
+        const marks = [
+          [20, 'P2'],
+          [40, 'P3'],
+          [60, 'P4'],
+          [80, 'P5'],
+          [100, 'Clear']
+        ];
+        ctx.save();
+        marks.forEach(function (m) {
+          const v = m[0], lab = m[1];
+          const py = y.getPixelForValue(v);
+          if (py < area.top - 2 || py > area.bottom + 2) return;
+          ctx.beginPath();
+          ctx.setLineDash(lab === 'Clear' ? [6, 4] : [4, 4]);
+          ctx.strokeStyle = lab === 'Clear' ? 'rgba(224,177,92,.65)' : 'rgba(255,255,255,.20)';
+          ctx.lineWidth = lab === 'Clear' ? 1.4 : 1;
+          ctx.moveTo(area.left, py);
+          ctx.lineTo(area.right, py);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = lab === 'Clear' ? '#e0b15c' : '#9aa3b2';
+          ctx.font = '600 11px "Segoe UI", system-ui, sans-serif';
+          ctx.textAlign = 'right';
+          ctx.textBaseline = lab === 'Clear' ? 'top' : 'bottom';
+          ctx.fillText(lab, area.right - 3, lab === 'Clear' ? py + 3 : py - 3);
+        });
+        ctx.restore();
+      }
+    };
+    new Chart(clear, {
+      type: 'line',
+      data: {
+        labels: data.labels,
+        datasets: [{
+          label: 'Bester Pull – Fortschritt zum Clear',
+          data: data.clearProg,
+          borderColor: '#e0b15c',
+          backgroundColor: 'rgba(224,177,92,.14)',
+          tension: .25,
+          fill: true,
+          spanGaps: true,
+          pointRadius: 5,
+          pointBackgroundColor: '#e0b15c',
+          pointBorderColor: '#090b10'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        layout: { padding: { top: 4, right: 8 } },
+        plugins: {
+          legend: { labels: { color: '#e8eaed' } },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                const i = ctx.dataIndex;
+                const v = ctx.raw;
+                const vTxt = (v === null || v === undefined) ? 'kein Wert' : (String(v).replace('.', ',') + ' %');
+                const ph = data.bestPhase[i];
+                const hp = data.bestBoss[i];
+                const pu = data.bestPull[i];
+                const hpTxt = (hp === null || hp === undefined) ? 'Boss-HP unbekannt' : (String(hp).replace('.', ',') + ' %');
+                return 'Fortschritt: ' + vTxt + (ph ? ' · ' + ph + ' · ' + hpTxt + ' (Pull ' + pu + ')' : '');
+              }
+            }
+          }
+        },
+        scales: {
+          y: { min: 0, max: 100, ticks: { callback: v => v + ' %' }, grid: grid, title: { display: true, text: 'Fortschritt zum Clear (höher = näher)' } },
+          x: { grid: { display: false } }
+        }
+      },
+      plugins: [phaseGuides]
+    });
+  }
+
   const prog = document.getElementById('chartProgress');
   if (prog) {
     new Chart(prog, {
