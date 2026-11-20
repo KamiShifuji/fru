@@ -7,6 +7,7 @@
   "best": "P3 · 41 % Pull 10 15.11",
   "pages": [
     "index.html",
+    "mechaniken.html",
     "abende/2026-10-01.html",
     "abende/2026-10-04.html",
     "abende/2026-10-15.html",
@@ -22,5 +23,6 @@
     "abende/2026-11-17.html",
     "abende/2026-11-19.html"
   ],
+  "site": "Silly Rangers",
   "pdf_evenings": {}
 }

@@ -1,11 +1,12 @@
-# FRU Static Prog-Stats
+# Silly Rangers · FRU Prog
 
-Öffentliche Übersicht zur Static von Kami Shifuji (Shiva) in
+Öffentliche Übersicht der Static **Silly Rangers** (Shiva) in
 **Eine zweite Zukunft (fatal)** / Futures Rewritten (Ultimate).
 
 - Live: https://kamishifuji.github.io/fru/
+- Repository: https://github.com/KamiShifuji/fru
 - Nur Static-Abende (Dienstag, Donnerstag, Sonntag).
 - Zahlen kommen aus FFLogs/Tomestone-Logs, nichts wird geschätzt.
 - Datenzeitraum aktuell: 01.10.2026–19.11.2026 · 290 Pulls · 14 Abende.
 
-Die Seite wird aus den lokalen Logs erzeugt und bei Bedarf neu hochgeladen.
+Inoffizielle Fan-Seite – FINAL FANTASY XIV © SQUARE ENIX

@@ -117,7 +117,7 @@ h3 { font-size: 1.02rem; color: var(--text); }
 .dot.p1 { background: var(--p1); } .dot.p2 { background: var(--p2); } .dot.p3 { background: var(--p3); }
 
 .stats {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
   margin: 1.4rem 0 1.6rem;
 }
 .stat {
@@ -219,10 +219,55 @@ details.method summary { cursor: pointer; font-weight: 700; }
 details.method p { color: var(--muted); font-size: .9rem; }
 
 footer.site {
-  border-top: 1px solid var(--line); margin-top: 3rem; padding: 22px 0 36px;
+  border-top: 1px solid var(--line); margin-top: 3rem; padding: 28px 0 40px;
   color: var(--muted); font-size: .86rem;
 }
-footer.site .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer.site .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+footer.site .foot-name { color: var(--gold); font-weight: 750; font-size: 1rem; margin-bottom: 4px; }
+footer.site .foot-side { text-align: right; }
+footer.site .legal {
+  display: block; margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+  color: var(--faint); font-size: .78rem;
+}
+footer.site a { color: var(--gold); }
+.stat .delta { margin-top: 8px; font-size: .82rem; font-weight: 700; }
+.stat .delta .vs, .delta .vs { font-weight: 600; color: var(--faint); }
+.delta { margin-top: 6px; font-size: .84rem; font-weight: 700; }
+
+.player-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: .8rem;
+}
+.pcard {
+  background: var(--bg-elev-2); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px 14px 12px; min-width: 0;
+}
+.pcard .phead { display: flex; align-items: center; gap: 10px; }
+.role-ico { width: 28px; height: 28px; flex: 0 0 28px; display: block; }
+.pcard .who { font-weight: 750; }
+.pcard .role { color: var(--muted); font-size: .78rem; font-weight: 600; }
+.pcard .kind { color: var(--faint); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; }
+.pcard .rate { font-size: 1.55rem; font-weight: 750; margin-top: 8px; }
+.pcard .sub, .pcard .cause { color: var(--muted); font-size: .8rem; margin-top: 4px; }
+.pcard .cause { margin-top: 8px; line-height: 1.35; }
+.pcard .dbar { margin-top: 10px; }
+
+.mech-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 1.2rem 0 2rem;
+}
+.mcard {
+  background: var(--bg-elev); border: 1px solid var(--line); border-radius: 14px;
+  padding: 16px 16px 14px; box-shadow: var(--shadow); min-width: 0;
+}
+.mcard h3 { margin: 0 0 .6rem; font-size: 1.02rem; border: 0; padding: 0; }
+.mstats { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; margin-bottom: .4rem; }
+.mstats .num { display: block; font-weight: 750; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.mstats .lab, .spark-wrap .lab { display: block; color: var(--faint); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 700; }
+.spark-wrap { margin-left: auto; text-align: right; }
+svg.spark { display: block; margin-left: auto; }
+.guide-mini { margin: .7rem 0 0; padding-left: 1.1rem; }
+.guide-mini li { margin: .2rem 0; }
+.guide-mini a { font-size: .88rem; }
 
 
 .guides {
@@ -351,11 +396,16 @@ footer.site .wrap { display: flex; justify-content: space-between; gap: 12px; fl
   letter-spacing: .02em;
 }
 .clear-ticks span { min-width: 0; }
+@media (max-width: 1100px) {
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .player-grid { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 860px) {
   .hero img { height: 220px; max-height: 220px; }
   .stats { grid-template-columns: 1fr 1fr; }
   .guides { grid-template-columns: 1fr; }
-  .death-grid { grid-template-columns: 1fr 1fr; }
+  .death-grid, .player-grid, .mech-grid { grid-template-columns: 1fr 1fr; }
+  footer.site .foot-side { text-align: left; }
   .ev { grid-template-columns: 1fr; }
   .ev .best { text-align: left; }
   .chart-box { height: 280px; }
@@ -365,7 +415,7 @@ footer.site .wrap { display: flex; justify-content: space-between; gap: 12px; fl
   .top-inner { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 520px) {
-  .death-grid { grid-template-columns: 1fr; }
+  .death-grid, .player-grid, .mech-grid { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr; }
   table { min-width: 460px; }
 }
