@@ -9,6 +9,38 @@
 
   const clear = document.getElementById('chartClear');
   if (clear && data.clearProg) {
+    let bestIdx = -1, bestVal = -1;
+    data.clearProg.forEach(function (v, i) { if (v !== null && v !== undefined && v > bestVal) { bestVal = v; bestIdx = i; } });
+    const BEST_COL = '#3dd6c6';
+    const ptCol = data.clearProg.map(function (_, i) { return i === bestIdx ? BEST_COL : '#e0b15c'; });
+    const ptRad = data.clearProg.map(function (_, i) { return i === bestIdx ? 9 : 5; });
+    const ptBorder = data.clearProg.map(function (_, i) { return i === bestIdx ? '#ffffff' : '#090b10'; });
+    const bestMark = {
+      id: 'bestMark',
+      afterDatasetsDraw: function (chart) {
+        if (bestIdx < 0) return;
+        const pt = chart.getDatasetMeta(0).data[bestIdx];
+        if (!pt) return;
+        const ctx = chart.ctx;
+        const txt = 'Rekord: ' + String(bestVal).replace('.', ',') + ' % (' + data.labels[bestIdx] + ')';
+        ctx.save();
+        ctx.font = '700 12px "Segoe UI", system-ui, sans-serif';
+        const w = ctx.measureText(txt).width + 14;
+        let x = pt.x - w / 2;
+        x = Math.max(chart.chartArea.left, Math.min(x, chart.chartArea.right - w));
+        const y = pt.y - 34;
+        ctx.fillStyle = 'rgba(9,11,16,.85)';
+        ctx.strokeStyle = BEST_COL;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        if (ctx.roundRect) { ctx.roundRect(x, y, w, 22, 6); } else { ctx.rect(x, y, w, 22); }
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = BEST_COL;
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText(txt, x + 7, y + 11);
+        ctx.restore();
+      }
+    };
     const phaseGuides = {
       id: 'phaseGuides',
       afterDraw: function (chart) {
@@ -57,9 +89,11 @@
           tension: .25,
           fill: true,
           spanGaps: true,
-          pointRadius: 5,
-          pointBackgroundColor: '#e0b15c',
-          pointBorderColor: '#090b10'
+          pointRadius: ptRad,
+          pointHoverRadius: ptRad.map(function (r) { return r + 2; }),
+          pointBackgroundColor: ptCol,
+          pointBorderColor: ptBorder,
+          pointBorderWidth: ptRad.map(function (r) { return r > 5 ? 2.5 : 1; })
         }]
       },
       options: {
@@ -88,7 +122,7 @@
           x: { grid: { display: false } }
         }
       },
-      plugins: [phaseGuides]
+      plugins: [phaseGuides, bestMark]
     });
   }
 
