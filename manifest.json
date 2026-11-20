@@ -1,0 +1,26 @@
+{
+  "stand": "20.11.2026",
+  "n_pulls": 290,
+  "n_evenings": 14,
+  "from": "01.10.2026",
+  "to": "19.11.2026",
+  "best": "P3 · 41 % Pull 10 15.11",
+  "pages": [
+    "index.html",
+    "abende/2026-10-01.html",
+    "abende/2026-10-04.html",
+    "abende/2026-10-15.html",
+    "abende/2026-10-18.html",
+    "abende/2026-10-25.html",
+    "abende/2026-10-29.html",
+    "abende/2026-11-01.html",
+    "abende/2026-11-03.html",
+    "abende/2026-11-05.html",
+    "abende/2026-11-08.html",
+    "abende/2026-11-12.html",
+    "abende/2026-11-15.html",
+    "abende/2026-11-17.html",
+    "abende/2026-11-19.html"
+  ],
+  "pdf_evenings": {}
+}

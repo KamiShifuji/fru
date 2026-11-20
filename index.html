@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="FRU Static Prog-Stats – Eine zweite Zukunft (fatal). 290 Pulls in 14 Static-Abenden, Quelle: FFLogs/Tomestone-Logs.">
+<meta name="robots" content="index,follow">
+<title>FRU · Static Prog-Stats</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="index.html">
+      <span class="kicker">FRU · Ultimate</span>
+      <span class="title">Eine zweite Zukunft (fatal)</span>
+      <span class="sub">Static Kami Shifuji · Shiva · nur Di / Do / So</span>
+    </a>
+    <nav class="main" aria-label="Hauptnavigation">
+      <a href="index.html" aria-current="page">Übersicht</a>
+      <a href="#abende">Abende</a>
+      <a href="#tode">Einzeltode</a>
+      <a href="#ursachen">Wipes</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>Static-Prog im Überblick</h1>
+  <p class="lede">
+    Alle Zahlen stammen aus den hochgeladenen FFLogs/Tomestone-Logs und zählen
+    <strong>nur die Static-Abende</strong> (Dienstag, Donnerstag, Sonntag).
+    Party-Finder-Logs an anderen Tagen sind raus.
+    Zeitraum der Daten: 01.10.2026–19.11.2026.
+    Noch kein Clear – alles Wipes.
+  </p>
+  <div class="stats">
+    <div class="stat"><div class="label">Pulls</div><div class="value">290</div>
+      <div class="hint">14 Abende · 15 Sessions</div></div>
+    <div class="stat"><div class="label">Kampfzeit</div><div class="value">17 h 42 min</div>
+      <div class="hint">reine Pull-Dauer, Summe</div></div>
+    <div class="stat"><div class="label">Bester Pull</div><div class="value gold">P3 · 41 %</div>
+      <div class="hint">15.11 · Pull 10 · 9:28</div></div>
+    <div class="stat"><div class="label">In P3 geendet</div><div class="value">28</div>
+      <div class="hint">9,7 % aller Pulls</div></div>
+  </div>
+  <p class="note">Erster P2 nach 26 Pulls (04.10, Pull 8, 3:36, Boss 80 %). Erster P3 nach 162 Pulls (29.10, Pull 20, 8:04, Boss 84 %). Boss-HP ist der verbleibende Lebenspunkte-Anteil des Bosses der erreichten Phase beim Wipe (niedriger = weiter). Hinweis zur Uhrzeit: 25.10 (früh) Start 19:06 (früher als 20:00). Der 25.10. bleibt ein Static-Sonntag und ist zu einem Abend zusammengefasst.</p>
+  <div class="actions"><a class='btn' href='pdf/FRU_Prog_Analyse.pdf'>Gesamt-PDF herunterladen</a></div>
+
+  <h2 id="fortschritt">Fortschritt über die Abende</h2>
+  <p class="note">Anteil der Pulls, die mindestens P2 bzw. mindestens P3 erreicht haben. Dazu der beste Pull des Abends (Phase, dann geringste Boss-HP).</p>
+  <div class="card"><div class="chart-box"><canvas id="chartProgress" aria-label="Fortschritt über die Abende"></canvas></div></div>
+  <div class="card"><div class="chart-box short"><canvas id="chartBest" aria-label="Beste Boss-HP pro Abend"></canvas></div>
+    <p class="fine">Die Linie zeigt die Boss-HP des besten Pulls. Punkte in unterschiedlichen Phasen sind nur bedingt vergleichbar – ein P3 mit 41&nbsp;% ist weiter als ein P2 mit 14&nbsp;%. Fehlende Werte (Boss-HP unbekannt) werden übersprungen.</p>
+  </div>
+
+  <h2 id="phasen">Phasenverteilung</h2>
+  <p class="note">Wo der Pull geendet hat, über alle 290 Static-Pulls: P1 151 (52,1 %), P2 111 (38,3 %), P3 28 (9,7 %).</p>
+  <div class="card tight"><div class="chart-box short"><canvas id="chartPhase" aria-label="Phasenverteilung"></canvas></div></div>
+
+  <h2 id="tode">Einzeltode pro Position</h2>
+  <p class="note">Nur <strong>Einzeltode vor der Wipe-Kaskade</strong> (letzte Kette mit mindestens 3 Toden, Abstand ≤ 6 s, danach stirbt niemand noch einmal). Maß: Tode ÷ gespielte Pulls × 10. „Nicht dabei“ fließt nicht als 0 ein. Reihenfolge: MT, OT, H1, H2, M1, M2, R1, R2.</p>
+  <div class="death-grid"><div class='dcard'><div class='who'>Kami <span class='role'>MT</span></div><div class='rate'>2,34</div><div class='sub'>68 Einzeltode in 290 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:62.1%;background:#4a90c3'></span></div></div><div class='dcard'><div class='who'>Yashiro <span class='role'>OT</span></div><div class='rate'>2,97</div><div class='sub'>77 Einzeltode in 259 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:78.7%;background:#7eb6e0'></span></div></div><div class='dcard'><div class='who'>Freyja <span class='role'>H1</span></div><div class='rate'>1,76</div><div class='sub'>51 Einzeltode in 290 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:46.6%;background:#3dbe8c'></span></div></div><div class='dcard'><div class='who'>Sam <span class='role'>H2</span></div><div class='rate'>1,31</div><div class='sub'>38 Einzeltode in 290 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:34.7%;background:#7dd39a'></span></div></div><div class='dcard'><div class='who'>Rinari <span class='role'>M1</span></div><div class='rate'>1,86</div><div class='sub'>46 Einzeltode in 247 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:49.3%;background:#e07a5f'></span></div></div><div class='dcard'><div class='who'>Lunia <span class='role'>M2</span></div><div class='rate'>3,78</div><div class='sub'>51 Einzeltode in 135 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:100.0%;background:#e0b15c'></span></div></div><div class='dcard'><div class='who'>Ayne <span class='role'>R1</span></div><div class='rate'>1,48</div><div class='sub'>39 Einzeltode in 264 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:39.1%;background:#c45c6c'></span></div></div><div class='dcard'><div class='who'>Vincent <span class='role'>R2</span></div><div class='rate'>1,84</div><div class='sub'>51 Einzeltode in 277 Pulls</div><div class='dbar' aria-hidden='true'><span style='width:48.7%;background:#d98b4a'></span></div></div></div>
+  <div class="card"><div class="chart-box short"><canvas id="chartDeaths" aria-label="Einzeltode pro 10 Pulls"></canvas></div>
+    <div class="table-wrap"><table><tr><th>Spieler</th><th>Pos.</th><th class="num">Einzeltode</th><th class="num">Pulls dabei</th><th class="num">pro 10 Pulls</th></tr><tr><td>Kami</td><td>MT</td><td class='num'>68</td><td class='num'>290</td><td class='num'>2,34</td></tr><tr><td>Yashiro</td><td>OT</td><td class='num'>77</td><td class='num'>259</td><td class='num'>2,97</td></tr><tr><td>Freyja</td><td>H1</td><td class='num'>51</td><td class='num'>290</td><td class='num'>1,76</td></tr><tr><td>Sam</td><td>H2</td><td class='num'>38</td><td class='num'>290</td><td class='num'>1,31</td></tr><tr><td>Rinari</td><td>M1</td><td class='num'>46</td><td class='num'>247</td><td class='num'>1,86</td></tr><tr><td>Lunia</td><td>M2</td><td class='num'>51</td><td class='num'>135</td><td class='num'>3,78</td></tr><tr><td>Ayne</td><td>R1</td><td class='num'>39</td><td class='num'>264</td><td class='num'>1,48</td></tr><tr><td>Vincent</td><td>R2</td><td class='num'>51</td><td class='num'>277</td><td class='num'>1,84</td></tr></table></div>
+    <p class="fine">Einzeltod ist kein automatischer eigener Fehler – fehlende Heilung, Mitigation oder Kettenreaktionen zählen genauso. Die Zahl zeigt, wo jemand stirbt, nicht die Schuldfrage.</p>
+  </div>
+
+  <h2 id="ursachen">Häufigste Wipe-Ursachen</h2>
+  <p class="note">Mechanik, die den Massentod ausgelöst hat (häufigste benannte Todesursache im ersten Massentod-Moment). Namen wie in der deutschen Spiel-Client.</p>
+  <div class="card"><div class="chart-box tall"><canvas id="chartCauses" aria-label="Wipe-Ursachen"></canvas></div>
+    <div class="table-wrap"><table><tr><th>Mechanik</th><th class="num">Wipes</th><th class="num">Anteil</th></tr><tr><td>P1 Schockpatrone/Sündenglut</td><td class='num'>41</td><td class='num'>14,1 %</td></tr><tr><td>P2 Diamantenstaub</td><td class='num'>26</td><td class='num'>9,0 %</td></tr><tr><td>P2 Überflutendes Licht – Fluch des Lichts</td><td class='num'>22</td><td class='num'>7,6 %</td></tr><tr><td>P1 Brandschlag/Todesmal</td><td class='num'>21</td><td class='num'>7,2 %</td></tr><tr><td>P1 Türme (Detonation)</td><td class='num'>20</td><td class='num'>6,9 %</td></tr><tr><td>P2 Überflutendes Licht – Rest</td><td class='num'>20</td><td class='num'>6,9 %</td></tr><tr><td>P1 Stetes Pulvermal #1</td><td class='num'>18</td><td class='num'>6,2 %</td></tr><tr><td>P3 Fatale Relativität</td><td class='num'>18</td><td class='num'>6,2 %</td></tr><tr><td>P1 Paradiestrennung</td><td class='num'>15</td><td class='num'>5,2 %</td></tr><tr><td>P2 Spiegelland</td><td class='num'>15</td><td class='num'>5,2 %</td></tr><tr><td>P2 Absoluter Nullpunkt [DPS]</td><td class='num'>15</td><td class='num'>5,2 %</td></tr><tr><td>P1 Stetes Pulvermal #2</td><td class='num'>13</td><td class='num'>4,5 %</td></tr><tr><td>P1 Leuchtende Aureole [DPS]</td><td class='num'>10</td><td class='num'>3,4 %</td></tr><tr><td>P1 Zyklon-Brecher #2</td><td class='num'>7</td><td class='num'>2,4 %</td></tr><tr><td>P3 Apokalypse</td><td class='num'>7</td><td class='num'>2,4 %</td></tr></table></div>
+  </div>
+
+  <h2 id="abende">Alle Static-Abende</h2>
+  <p class="note">Klick auf einen Abend öffnet die Detailseite mit Pull-Tabelle, Einzeltoden und Vergleich zum vorherigen Termin.</p>
+  <div class="ev-list"><a class='ev' href='abende/2026-11-19.html'><div><span class='date'>19.11.2026</span><span class='wd'>Do · 17 Pulls</span></div><div class='meta'>P1 5 · P2 5 · P3 7 · P3 erreicht 41,2 %<div class='bars' aria-hidden='true'><span class='p1' style='width:29.41%'></span><span class='p2' style='width:29.41%'></span><span class='p3' style='width:41.18%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 54 %<div class='fine'>Pull 6 · 9:37</div></div></a><a class='ev' href='abende/2026-11-17.html'><div><span class='date'>17.11.2026</span><span class='wd'>Di · 13 Pulls</span></div><div class='meta'>P1 4 · P2 6 · P3 3 · P3 erreicht 23,1 %<div class='bars' aria-hidden='true'><span class='p1' style='width:30.77%'></span><span class='p2' style='width:46.15%'></span><span class='p3' style='width:23.08%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 42 %<div class='fine'>Pull 11 · 9:42</div></div></a><a class='ev' href='abende/2026-11-15.html'><div><span class='date'>15.11.2026</span><span class='wd'>So · 18 Pulls</span></div><div class='meta'>P1 8 · P2 5 · P3 5 · P3 erreicht 27,8 %<div class='bars' aria-hidden='true'><span class='p1' style='width:44.44%'></span><span class='p2' style='width:27.78%'></span><span class='p3' style='width:27.78%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 41 %<div class='fine'>Pull 10 · 9:28</div></div></a><a class='ev' href='abende/2026-11-12.html'><div><span class='date'>12.11.2026</span><span class='wd'>Do · 17 Pulls</span></div><div class='meta'>P1 6 · P2 7 · P3 4 · P3 erreicht 23,5 %<div class='bars' aria-hidden='true'><span class='p1' style='width:35.29%'></span><span class='p2' style='width:41.18%'></span><span class='p3' style='width:23.53%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 76 %<div class='fine'>Pull 17 · 8:34</div></div></a><a class='ev' href='abende/2026-11-08.html'><div><span class='date'>08.11.2026</span><span class='wd'>So · 12 Pulls</span></div><div class='meta'>P1 4 · P2 5 · P3 3 · P3 erreicht 25,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:33.33%'></span><span class='p2' style='width:41.67%'></span><span class='p3' style='width:25.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 50 %<div class='fine'>Pull 7 · 9:40</div></div></a><a class='ev' href='abende/2026-11-05.html'><div><span class='date'>05.11.2026</span><span class='wd'>Do · 20 Pulls</span></div><div class='meta'>P1 8 · P2 11 · P3 1 · P3 erreicht 5,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:40.00%'></span><span class='p2' style='width:55.00%'></span><span class='p3' style='width:5.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 81 %<div class='fine'>Pull 7 · 8:05</div></div></a><a class='ev' href='abende/2026-11-03.html'><div><span class='date'>03.11.2026</span><span class='wd'>Di · 18 Pulls</span></div><div class='meta'>P1 4 · P2 11 · P3 3 · P3 erreicht 16,7 %<div class='bars' aria-hidden='true'><span class='p1' style='width:22.22%'></span><span class='p2' style='width:61.11%'></span><span class='p3' style='width:16.67%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 81 %<div class='fine'>Pull 18 · 8:13</div></div></a><a class='ev' href='abende/2026-11-01.html'><div><span class='date'>01.11.2026</span><span class='wd'>So · 13 Pulls</span></div><div class='meta'>P1 10 · P2 2 · P3 1 · P3 erreicht 7,7 %<div class='bars' aria-hidden='true'><span class='p1' style='width:76.92%'></span><span class='p2' style='width:15.38%'></span><span class='p3' style='width:7.69%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 80 %<div class='fine'>Pull 7 · 8:03</div></div></a><a class='ev' href='abende/2026-10-29.html'><div><span class='date'>29.10.2026</span><span class='wd'>Do · 20 Pulls</span></div><div class='meta'>P1 10 · P2 9 · P3 1 · P3 erreicht 5,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:50.00%'></span><span class='p2' style='width:45.00%'></span><span class='p3' style='width:5.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P3'>P3</span> · 84 %<div class='fine'>Pull 20 · 8:04</div></div></a><a class='ev' href='abende/2026-10-25.html'><div><span class='date'>25.10.2026</span><span class='wd'>So · 36 Pulls</span></div><div class='meta'>P1 18 · P2 18 · P3 0 · P3 erreicht 0,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:50.00%'></span><span class='p2' style='width:50.00%'></span><span class='p3' style='width:0.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P2'>P2</span> · 14 %<div class='fine'>Pull 34 · 7:00</div></div></a><a class='ev' href='abende/2026-10-18.html'><div><span class='date'>18.10.2026</span><span class='wd'>So · 30 Pulls</span></div><div class='meta'>P1 15 · P2 15 · P3 0 · P3 erreicht 0,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:50.00%'></span><span class='p2' style='width:50.00%'></span><span class='p3' style='width:0.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P2'>P2</span> · 37 %<div class='fine'>Pull 16 · 5:24</div></div></a><a class='ev' href='abende/2026-10-15.html'><div><span class='date'>15.10.2026</span><span class='wd'>Do · 24 Pulls</span></div><div class='meta'>P1 12 · P2 12 · P3 0 · P3 erreicht 0,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:50.00%'></span><span class='p2' style='width:50.00%'></span><span class='p3' style='width:0.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P2'>P2</span> · 43 %<div class='fine'>Pull 14 · 5:18</div></div></a><a class='ev' href='abende/2026-10-04.html'><div><span class='date'>04.10.2026</span><span class='wd'>So · 34 Pulls</span></div><div class='meta'>P1 29 · P2 5 · P3 0 · P3 erreicht 0,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:85.29%'></span><span class='p2' style='width:14.71%'></span><span class='p3' style='width:0.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P2'>P2</span> · 79 %<div class='fine'>Pull 31 · 3:40</div></div></a><a class='ev' href='abende/2026-10-01.html'><div><span class='date'>01.10.2026</span><span class='wd'>Do · 18 Pulls</span></div><div class='meta'>P1 18 · P2 0 · P3 0 · P3 erreicht 0,0 %<div class='bars' aria-hidden='true'><span class='p1' style='width:100.00%'></span><span class='p2' style='width:0.00%'></span><span class='p3' style='width:0.00%'></span></div></div><div class='best'>Bester Pull<br><span class='phase P1'>P1</span> · 23 %<div class='fine'>Pull 16 · 2:46</div></div></a></div>
+
+  <details class="method">
+    <summary>So wird gerechnet</summary>
+    <p>Datenbasis sind die hochgeladenen FFLogs-Reports, die auch auf Tomestone liegen. Es zählen nur Abende, die an einem Dienstag, Donnerstag oder Sonntag <strong>begonnen</strong> haben. Der 31.10. (Samstag, inkl. der Nacht auf den 01.11.) ist deshalb Party Finder und fehlt hier; der 01.11. abends (Start 21:32) ist ein Static-Sonntag und bleibt drin. Der 25.10. besteht aus zwei Blöcken und ist ein Abend.</p>
+    <p>Die Wipe-Kaskade ist die letzte Todeskette mit mindestens drei Toden (Abstand ≤ 6 s), aus der danach niemand noch einmal stirbt. Alles in und nach dieser Kette zählt als Wipe, nicht als Einzeltod. Tode mehr als 3 s vor dem ersten Massentod-Moment (≥ 2 Tode innerhalb 1 s) bleiben Einzeltode.</p>
+    <p>Boss-HP kommt aus FFLogs und ist der verbleibende Anteil in der erreichten Phase. Bei einem Pull (19.11., Pull 2) fehlt der Wert in FFLogs und wird als unbekannt geführt. Es wird nichts ergänzt oder geschätzt.</p>
+  </details>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div>Stand 20.11.2026, Quelle: FFLogs/Tomestone-Logs.</div>
+    <div>Nur Static-Abende (Dienstag, Donnerstag, Sonntag). Wipe-Kaskade zählt nicht als Einzeltod.</div>
+  </div>
+</footer>
+
+<script type="application/json" id="chart-data">{"labels": ["01.10", "04.10", "15.10", "18.10", "25.10", "29.10", "01.11", "03.11", "05.11", "08.11", "12.11", "15.11", "17.11", "19.11"], "p2": [0.0, 14.7, 50.0, 50.0, 50.0, 50.0, 23.1, 77.8, 60.0, 66.7, 64.7, 55.6, 69.2, 70.6], "p3": [0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 7.7, 16.7, 5.0, 25.0, 23.5, 27.8, 23.1, 41.2], "bestPhase": ["P1", "P2", "P2", "P2", "P2", "P3", "P3", "P3", "P3", "P3", "P3", "P3", "P3", "P3"], "bestBoss": [23.0, 79.0, 43.0, 37.0, 14.0, 84.0, 80.0, 81.0, 81.0, 50.0, 76.0, 41.0, 42.0, 54.0], "bestPull": [16, 31, 14, 16, 34, 20, 7, 18, 7, 7, 17, 10, 11, 6], "phase": {"labels": ["P1", "P2", "P3"], "values": [151, 111, 28], "colors": ["#e07a5f", "#5b9bd5", "#9b6bdb"]}, "causes": {"labels": ["P1 Schockpatrone/Sündenglut", "P2 Diamantenstaub", "P2 Überflutendes Licht – Fluch des Lichts", "P1 Brandschlag/Todesmal", "P1 Türme (Detonation)", "P2 Überflutendes Licht – Rest", "P1 Stetes Pulvermal #1", "P3 Fatale Relativität", "P1 Paradiestrennung", "P2 Spiegelland", "P2 Absoluter Nullpunkt [DPS]", "P1 Stetes Pulvermal #2"], "values": [41, 26, 22, 21, 20, 20, 18, 18, 15, 15, 15, 13]}, "deaths": {"labels": ["Kami (MT)", "Yashiro (OT)", "Freyja (H1)", "Sam (H2)", "Rinari (M1)", "Lunia (M2)", "Ayne (R1)", "Vincent (R2)"], "values": [2.34, 2.97, 1.76, 1.31, 1.86, 3.78, 1.48, 1.84], "colors": ["#4a90c3", "#7eb6e0", "#3dbe8c", "#7dd39a", "#e07a5f", "#e0b15c", "#c45c6c", "#d98b4a"]}}</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="js/charts.js"></script>
+</body>
+</html>
