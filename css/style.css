@@ -482,9 +482,13 @@ svg.spark { display: block; margin-left: auto; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 16px 18px 14px;
-  margin: 1.2rem 0 1rem;
+  margin: 0 0 1.15rem;
+  width: 100%;
+  box-sizing: border-box;
   box-shadow: var(--shadow);
 }
+.hero:has(+ .clear-head) { margin-bottom: 1.15rem; }
+.actions-bottom { margin: 1.8rem 0 0; }
 .clear-head .k {
   color: var(--muted);
   font-size: .75rem;
