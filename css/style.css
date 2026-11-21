@@ -466,7 +466,7 @@ svg.spark { display: block; margin-left: auto; }
 .p3focus{border-left:3px solid #e0b15c}
 
 /* P3 aufgeteilt: je Mechanik ein Rahmen (t65) */
-.p3prog{--ur:#e0b15c;--ap:#a98bff}
+:root,.p3prog{--ur:#e0b15c;--ap:#a98bff}
 .p3block{border:2px solid var(--acc);border-radius:14px;padding:6px 14px 14px;margin:16px 0 20px;
   background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 12%,transparent),transparent 60%)}
 .p3-ur{--acc:var(--ur)} .p3-ap{--acc:var(--ap)}
@@ -483,3 +483,6 @@ svg.spark { display: block; margin-left: auto; }
 .p3line{border-left:3px solid var(--acc);padding-left:8px}
 .p3l-ur{--acc:#e0b15c} .p3l-ap{--acc:#a98bff}
 .p3line .ftag{background:color-mix(in srgb,var(--acc) 25%,transparent);color:var(--acc)}
+/* Prog-Point-Rahmen pro Slot (datengetrieben) */
+.pp-1{--acc:var(--ur)} .pp-2{--acc:var(--ap)} .pp-old{--acc:#8f9bb3}
+.p3old{margin:8px 0 18px}
