@@ -154,8 +154,17 @@ h3 { font-size: 1.02rem; color: var(--text); }
 .dot.p1 { background: var(--p1); } .dot.p2 { background: var(--p2); } .dot.p3 { background: var(--p3); }
 
 .stats {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
   margin: 1.4rem 0 1.6rem;
+}
+.stats:has(> :nth-child(3):last-child) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.stats:has(> :nth-child(5):last-child) {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 .stat {
   background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
@@ -527,12 +536,20 @@ svg.spark { display: block; margin-left: auto; }
 }
 .clear-ticks span { min-width: 0; }
 @media (max-width: 1100px) {
-  .stats { grid-template-columns: repeat(3, 1fr); }
+  .stats,
+  .stats:has(> :nth-child(3):last-child),
+  .stats:has(> :nth-child(5):last-child) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .player-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 860px) {
   .hero img { height: 220px; max-height: 220px; }
-  .stats { grid-template-columns: 1fr 1fr; }
+  .stats,
+  .stats:has(> :nth-child(3):last-child),
+  .stats:has(> :nth-child(5):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .guides { grid-template-columns: 1fr; }
   .death-grid, .player-grid, .mech-grid { grid-template-columns: 1fr 1fr; }
   footer.site .foot-side { text-align: left; }
@@ -549,7 +566,11 @@ svg.spark { display: block; margin-left: auto; }
 }
 @media (max-width: 520px) {
   .death-grid, .player-grid, .mech-grid { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr; }
+  .stats,
+  .stats:has(> :nth-child(3):last-child),
+  .stats:has(> :nth-child(5):last-child) {
+    grid-template-columns: 1fr;
+  }
   table { min-width: 460px; }
 }
 
