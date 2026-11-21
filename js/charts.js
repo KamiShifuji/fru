@@ -130,48 +130,75 @@
   }
 
   const prog = document.getElementById('chartProgress');
-  if (prog) {
-    const reach = data.reach || { P2: data.p2, P3: data.p3 };
-    const reachOrder = data.reachOrder || Object.keys(reach);
-    const reachColors = data.reachColors || { P2: '#5b9bd5', P3: '#9b6bdb', P4: '#e0b15c', P5: '#3dbe8c', Clear: '#f3e6b8' };
-    const reachFills = data.reachFills || { P2: 'rgba(91,155,213,.15)', P3: 'rgba(155,107,219,.18)', P4: 'rgba(224,177,92,.18)', P5: 'rgba(61,190,140,.18)', Clear: 'rgba(243,230,184,.18)' };
-    const reachSets = reachOrder.filter(function (lab) { return reach[lab]; }).map(function (lab) {
+  if (prog && data.phaseTime && data.phaseTime.order && data.phaseTime.order.length) {
+    const pt = data.phaseTime;
+    const timeLbl = function (sec) {
+      sec = Math.round(sec || 0);
+      const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60);
+      if (h) return h + ' h ' + String(m).padStart(2, '0') + ' min';
+      return m + ' min';
+    };
+    const dePct = function (v) { return String(Math.round(v * 10) / 10).replace('.', ',') + ' %'; };
+    const sets = pt.order.map(function (lab, idx) {
+      const share = pt.share[lab];
+      const shareTxt = (share === null || share === undefined) ? '' : ' (' + String(share).replace('.', ',') + ' %)';
       return {
-        label: lab + ' erreicht %',
-        data: reach[lab],
-        borderColor: reachColors[lab] || '#e0b15c',
-        backgroundColor: reachFills[lab] || 'rgba(224,177,92,.18)',
-        tension: .25,
-        fill: true,
-        pointRadius: 4
+        label: lab + ' · ' + (pt.label[lab] || '') + shareTxt,
+        key: lab,
+        data: pt.hours[lab],
+        borderColor: (pt.colors && pt.colors[lab]) || '#e0b15c',
+        backgroundColor: (pt.fills && pt.fills[lab]) || 'rgba(224,177,92,.55)',
+        tension: .2,
+        fill: idx === 0 ? 'origin' : '-1',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2
       };
     });
     new Chart(prog, {
       type: 'line',
-      data: {
-        labels: data.labels,
-        datasets: reachSets
-      },
+      data: { labels: data.labels, datasets: sets },
       options: {
         responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { labels: { color: '#e8eaed' } },
+          legend: { labels: { color: '#e8eaed', boxWidth: 14 } },
           tooltip: {
             callbacks: {
+              title: function (items) {
+                return items.length ? (data.labels[items[0].dataIndex] || '') : '';
+              },
+              label: function (item) {
+                const lab = item.dataset.key;
+                const i = item.dataIndex;
+                const sec = (pt.seconds[lab] || [])[i] || 0;
+                const tot = pt.order.reduce(function (s, l) { return s + ((pt.seconds[l] || [])[i] || 0); }, 0);
+                const share = tot ? (100 * sec / tot) : 0;
+                return lab + ': ' + timeLbl(sec) + ' kumuliert (' + dePct(share) + ')';
+              },
               afterBody: function (items) {
+                if (!items.length) return '';
                 const i = items[0].dataIndex;
-                const ph = data.bestPhase[i], hp = data.bestBoss[i], pu = data.bestPull[i];
-                if (!ph) return '';
-                const hpTxt = (hp === null || hp === undefined) ? 'Boss-HP unbekannt' : (String(hp).replace('.', ',') + ' %');
-                return 'Bester Pull: ' + ph + ' · ' + hpTxt + ' (Pull ' + pu + ')';
+                return pt.order.map(function (lab) {
+                  const add = (pt.addedSec[lab] || [])[i] || 0;
+                  const n = (pt.addedPulls[lab] || [])[i] || 0;
+                  if (!add && !n) return null;
+                  const pw = n === 1 ? 'Pull' : 'Pulls';
+                  return 'an diesem Abend ' + lab + ': ' + timeLbl(add) + ' · ' + n + ' ' + pw;
+                }).filter(Boolean);
               }
             }
           }
         },
         scales: {
-          y: { min: 0, max: 100, ticks: { callback: v => v + ' %' }, grid: grid, title: { display: true, text: 'Anteil der Pulls' } },
-          x: { grid: { display: false } }
+          y: {
+            stacked: true,
+            min: 0,
+            ticks: { callback: function (v) { return String(v).replace('.', ',') + ' h'; } },
+            grid: grid,
+            title: { display: true, text: 'Stunden aktiver Kampfzeit (kumuliert)' }
+          },
+          x: { stacked: true, grid: { display: false } }
         }
       }
     });
