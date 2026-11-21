@@ -486,5 +486,3 @@ svg.spark { display: block; margin-left: auto; }
 /* Prog-Point-Rahmen pro Slot (datengetrieben) */
 .pp-1{--acc:var(--ur)} .pp-2{--acc:var(--ap)} .pp-old{--acc:#8f9bb3}
 .p3old{margin:8px 0 18px}
-/* Weg bis zum Clear: HP-Leiste, links = Clear (0 %), rechts = Start (100 %); Farbe nach Phase des Rests */
-.clear-track > .fill.fill-rest{background:linear-gradient(90deg,var(--gold) 0%,var(--p3) 40%,var(--p2) 70%,var(--p1) 100%) left/100% 100% no-repeat}
