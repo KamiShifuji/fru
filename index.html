@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Bester Pull: 51,7 % zum Clear · 277 Pulls · 13 Abende">
+<meta name="description" content="Bester Pull: noch 48,3 % bis zum Clear · 277 Pulls · 13 Abende">
 <meta name="robots" content="index,follow">
 <title>Silly Rangers · FRU Prog</title>
 <link rel="canonical" href="https://kamishifuji.github.io/fru/">
@@ -13,16 +13,16 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Silly Rangers">
 <meta property="og:title" content="Silly Rangers · FRU Prog">
-<meta property="og:description" content="Bester Pull: 51,7 % zum Clear · 277 Pulls · 13 Abende">
+<meta property="og:description" content="Bester Pull: noch 48,3 % bis zum Clear · 277 Pulls · 13 Abende">
 <meta property="og:url" content="https://kamishifuji.github.io/fru/">
 <meta property="og:image" content="https://kamishifuji.github.io/fru/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Silly Rangers · FRU Prog">
-<meta name="twitter:description" content="Bester Pull: 51,7 % zum Clear · 277 Pulls · 13 Abende">
+<meta name="twitter:description" content="Bester Pull: noch 48,3 % bis zum Clear · 277 Pulls · 13 Abende">
 <meta name="twitter:image" content="https://kamishifuji.github.io/fru/assets/og.jpg">
-<link rel="stylesheet" href="css/style.css?v=1ac3eb5cfa">
+<link rel="stylesheet" href="css/style.css?v=104f25d85b">
 </head>
 <body class="home">
 <a class="skip" href="#main">Zum Inhalt</a>
@@ -75,11 +75,11 @@
   <p class="note">Erster P2 nach 26 Pulls (04.10, Pull 8, 3:36, Boss 80,5 %). Erster P3 nach 162 Pulls (29.10, Pull 20, 8:04, Boss 84,1 %). Boss-HP ist der verbleibende Lebenspunkte-Anteil des Bosses der erreichten Phase beim Wipe (niedriger = weiter). Hinweis zur Uhrzeit: 25.10 (früh) Start 19:06 (früher als 20:00). Der 25.10. bleibt ein Static-Sonntag und ist zu einem Abend zusammengefasst.</p>
   <div class="actions"><a class='btn' href='pdf/FRU_Prog_Analyse.pdf'>Gesamt-PDF herunterladen</a></div>
 
-<div class='clear-head' id='clear-best'><div class='k'>Bester Pull bisher</div><div class='num'>51,7&nbsp;% zum Clear</div><div class='sub'>P3 · 41,6 % · 15.11.2026 · Pull 10 · 9:28</div><div class='clear-track' aria-hidden='true'><span class='fill' style='width:51.7%'></span><span class='tick' style='left:20%'></span><span class='tick' style='left:40%'></span><span class='tick' style='left:60%'></span><span class='tick' style='left:80%'></span></div><div class='clear-ticks'><span>0 · P1</span><span>P2</span><span>P3</span><span>P4</span><span>P5</span><span>Clear</span></div></div>
+<div class='clear-head' id='clear-best'><div class='k'>Bester Pull bisher</div><div class='num'>noch 48,3&nbsp;% bis zum Clear</div><div class='sub'>P3 · 41,6 % · 15.11.2026 · Pull 10 · 9:28</div><div class='clear-track' aria-hidden='true'><span class='fill fill-rest' style='width:48.3%;background-size:207.0% 100%'></span><span class='tick' style='left:20%'></span><span class='tick' style='left:40%'></span><span class='tick' style='left:60%'></span><span class='tick' style='left:80%'></span></div><div class='clear-ticks'><span>0 · Clear</span><span>P5</span><span>P4</span><span>P3</span><span>P2</span><span>100 · Start</span></div></div>
 
-  <h2 id="fortschritt">Fortschritt bis zum Clear (0–100 %)</h2>
-  <div class="card"><div class="chart-box"><canvas id="chartClear" aria-label="Fortschritt bis zum Clear über die Abende"></canvas></div>
-    <p class="fine">Pro Abend der beste Pull, umgerechnet auf den Weg zum Clear. Das ist ein <strong>vereinfachtes Modell</strong>: Jede der fünf Phasen zählt gleich 20&nbsp;%, unabhängig vom echten Zeitanteil im Fight. Rechnung: (Phase − 1) × 20&nbsp;% + (100 − Boss-HP&nbsp;%) / 100 × 20&nbsp;%. Beispiel: P3 bei 41&nbsp;% Boss-HP = 40 + 11,8 = 51,8&nbsp;%. 100&nbsp;% wäre ein Clear. Die waagerechten Linien markieren den Start von P2 / P3 / P4 / P5 (20 / 40 / 60 / 80&nbsp;%) und den Clear (100&nbsp;%).</p>
+  <h2 id="fortschritt">Weg bis zum Clear (100 % = Start, 0 % = Clear)</h2>
+  <div class="card"><div class="chart-box"><canvas id="chartClear" aria-label="Weg bis zum Clear über die Abende"></canvas></div>
+    <p class="fine">Pro Abend der beste Pull, umgerechnet auf den Rest bis zum Clear – wie eine HP-Leiste über den ganzen Fight: 100&nbsp;% ist der Start von FRU, 0&nbsp;% der Clear, je tiefer die Linie, desto weiter seid ihr. Das ist ein <strong>vereinfachtes Modell</strong>: Jede der fünf Phasen zählt gleich 20&nbsp;%, unabhängig vom echten Zeitanteil im Fight. Rechnung: Rest = 100 − [(Phase − 1) × 20&nbsp;% + (100 − Boss-HP&nbsp;%) / 100 × 20&nbsp;%]. Beispiel bester Pull: P3 bei 41,6&nbsp;% Boss-HP = 100 − (40 + 11,7) = 48,3&nbsp;% Rest. Die waagerechten Linien markieren den Start von P2 / P3 / P4 / P5 (80 / 60 / 40 / 20&nbsp;%) und den Clear (0&nbsp;%).</p>
   </div>
 
   <h2 id="anteil">Fortschritt über die Abende</h2>
@@ -117,7 +117,7 @@
     <p>Seit dem 20.11.2026 gleicht die Seite die Daten mit der FFLogs-API ab: volle Report-Links, Boss-HP mit Nachkommastelle, Spielerliste pro Pull und Positionsdaten für die <a href='fehler.html'>Fehler-Analyse</a>. Neue Reports kommen automatisch über die API dazu. 3 Pulls hatten in den ausgelesenen Daten keine Todesliste (03.11 Pull 13, 05.11 Pull 1, 05.11 Pull 12). Die API bestätigt: dort ist niemand gestorben, die Pulls endeten in der Zwischenphase ohne Massentod. Boss-HP korrigiert bzw. ergänzt: 15.11 Pull 3: 22 → 21.02 %, 19.11 Pull 2: ? → 100 %. Für 05.11 verlinkt die Seite das Log eines anderen Mitglieds derselben Session (gleiche Pulls und Dauern).</p>
     <p>Die Wipe-Kaskade ist die letzte Todeskette mit mindestens drei Toden (Abstand ≤ 6 s), aus der danach niemand noch einmal stirbt. Alles in und nach dieser Kette zählt als Wipe, nicht als Einzeltod. Tode mehr als 3 s vor dem ersten Massentod-Moment (≥ 2 Tode innerhalb 1 s) bleiben Einzeltode.</p>
     <p>Boss-HP kommt aus FFLogs und ist der verbleibende Anteil in der erreichten Phase, seit dem API-Abgleich mit Nachkommastelle. Es wird nichts ergänzt oder geschätzt.</p>
-    <p>Der Balken „Fortschritt bis zum Clear“ ist ein vereinfachtes Modell, keine echte Zeitmessung: Jede der fünf Phasen zählt gleich 20&nbsp;%. Formel: (Phase − 1) × 20&nbsp;% + (100 − Boss-HP) / 100 × 20&nbsp;%. 100&nbsp;% wäre ein Clear.</p>
+    <p>Der Balken „Weg bis zum Clear“ ist ein vereinfachtes Modell, keine echte Zeitmessung: Jede der fünf Phasen zählt gleich 20&nbsp;%. Formel: Rest = 100 − [(Phase − 1) × 20&nbsp;% + (100 − Boss-HP) / 100 × 20&nbsp;%]. 100&nbsp;% ist der Start von FRU, 0&nbsp;% wäre ein Clear.</p>
   </details>
 
 
@@ -165,8 +165,8 @@
   <div class="wrap legal">Inoffizielle Fan-Seite – FINAL FANTASY XIV © SQUARE ENIX</div>
 </footer>
 
-<script type="application/json" id="chart-data">{"labels": ["01.10", "04.10", "15.10", "18.10", "25.10", "29.10", "03.11", "05.11", "08.11", "12.11", "15.11", "17.11", "19.11"], "p2": [0.0, 14.7, 50.0, 50.0, 50.0, 50.0, 77.8, 60.0, 66.7, 64.7, 55.6, 69.2, 70.6], "p3": [0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 16.7, 5.0, 25.0, 23.5, 27.8, 23.1, 41.2], "bestPhase": ["P1", "P2", "P2", "P2", "P2", "P3", "P3", "P3", "P3", "P3", "P3", "P3", "P3"], "bestBoss": [23.57, 79.46, 43.12, 37.35, 14.7, 84.08, 81.38, 81.82, 50.17, 76.2, 41.57, 42.18, 54.32], "bestPull": [16, 31, 14, 16, 34, 20, 18, 7, 7, 17, 10, 11, 6], "clearProg": [15.3, 24.1, 31.4, 32.5, 37.1, 43.2, 43.7, 43.6, 50.0, 44.8, 51.7, 51.6, 49.1], "phaseHp": {"P1": [23.57, 2.48, 5.86, 2.47, 0.93, 0.55, 4.97, 0.78, 28.08, 0.13, 4.64, 5.68, 12.46], "P2": [null, 79.46, 43.12, 37.35, 14.7, 30.23, 15.21, 15.66, 31.12, 20.23, 21.02, 19.83, 15.54], "P3": [null, null, null, null, null, 84.08, 81.38, 81.82, 50.17, 76.2, 41.57, 42.18, 54.32]}, "phaseHpColors": {"P1": "#e07a5f", "P2": "#5b9bd5", "P3": "#9b6bdb", "P4": "#e0b15c", "P5": "#3dbe8c"}, "phaseHpFills": {"P1": "rgba(224,122,95,.12)", "P2": "rgba(91,155,213,.12)", "P3": "rgba(155,107,219,.12)", "P4": "rgba(224,177,92,.12)", "P5": "rgba(61,190,140,.12)"}, "phase": {"labels": ["P1", "P2", "P3"], "values": [141, 109, 27], "colors": ["#e07a5f", "#5b9bd5", "#9b6bdb"]}, "causes": {"labels": [["P1 Schockpatrone/Sündenglut", "(Bow Shock / Sinblaze)"], ["P2 Diamantenstaub", "(Diamond Dust)"], ["P2 Überflutendes Licht – Fluch", "des Lichts", "(Light Rampant – Refulgent Fate)"], ["P1 Brandschlag/Todesmal", "(Burnt Strike / Fated Burn Mark)"], ["P2 Überflutendes Licht – Rest", "(Light Rampant –", "Towers/Puddles/Banish III)"], ["P1 Türme – Detonation", "(Towers – Unmitigated Explosion)"], ["P1 Stetes Pulvermal #1", "(Powder Mark Trail #1)"], ["P3 Fatale Relativität", "(Ultimate Relativity)"], ["P2 Spiegelland inkl. Verbannga", "(Mirror, Mirror incl. Banish", "III)"], ["P2 Absoluter Nullpunkt [DPS]", "(Absolute Zero)"], ["P1 Paradiestrennung /", "Erda-Detonation", "(Utopian Sky / Blasting Zone)"], ["P1 Stetes Pulvermal #2 + Blutung", "(Powder Mark Trail #2 +", "Bleeding)"]], "values": [40, 25, 22, 21, 20, 19, 17, 17, 15, 14, 13, 12]}, "deaths": {"labels": ["Kami (MT)", "Yashiro (OT)", "Freyja (H1)", "Sam (H2)", "Rinari (M1)", "Lunia (M2)", "Ayne (R1)", "Vincent (R2)"], "values": [2.38, 2.55, 1.62, 1.12, 1.58, 3.26, 1.21, 1.59], "colors": ["#4a90c3", "#7eb6e0", "#3dbe8c", "#7dd39a", "#e07a5f", "#e0b15c", "#c45c6c", "#d98b4a"]}}</script>
+<script type="application/json" id="chart-data">{"labels": ["01.10", "04.10", "15.10", "18.10", "25.10", "29.10", "03.11", "05.11", "08.11", "12.11", "15.11", "17.11", "19.11"], "p2": [0.0, 14.7, 50.0, 50.0, 50.0, 50.0, 77.8, 60.0, 66.7, 64.7, 55.6, 69.2, 70.6], "p3": [0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 16.7, 5.0, 25.0, 23.5, 27.8, 23.1, 41.2], "bestPhase": ["P1", "P2", "P2", "P2", "P2", "P3", "P3", "P3", "P3", "P3", "P3", "P3", "P3"], "bestBoss": [23.57, 79.46, 43.12, 37.35, 14.7, 84.08, 81.38, 81.82, 50.17, 76.2, 41.57, 42.18, 54.32], "bestPull": [16, 31, 14, 16, 34, 20, 18, 7, 7, 17, 10, 11, 6], "clearProg": [15.3, 24.1, 31.4, 32.5, 37.1, 43.2, 43.7, 43.6, 50.0, 44.8, 51.7, 51.6, 49.1], "clearRest": [84.7, 75.9, 68.6, 67.5, 62.9, 56.8, 56.3, 56.4, 50.0, 55.2, 48.3, 48.4, 50.9], "phaseHp": {"P1": [23.57, 2.48, 5.86, 2.47, 0.93, 0.55, 4.97, 0.78, 28.08, 0.13, 4.64, 5.68, 12.46], "P2": [null, 79.46, 43.12, 37.35, 14.7, 30.23, 15.21, 15.66, 31.12, 20.23, 21.02, 19.83, 15.54], "P3": [null, null, null, null, null, 84.08, 81.38, 81.82, 50.17, 76.2, 41.57, 42.18, 54.32]}, "phaseHpColors": {"P1": "#e07a5f", "P2": "#5b9bd5", "P3": "#9b6bdb", "P4": "#e0b15c", "P5": "#3dbe8c"}, "phaseHpFills": {"P1": "rgba(224,122,95,.12)", "P2": "rgba(91,155,213,.12)", "P3": "rgba(155,107,219,.12)", "P4": "rgba(224,177,92,.12)", "P5": "rgba(61,190,140,.12)"}, "phase": {"labels": ["P1", "P2", "P3"], "values": [141, 109, 27], "colors": ["#e07a5f", "#5b9bd5", "#9b6bdb"]}, "causes": {"labels": [["P1 Schockpatrone/Sündenglut", "(Bow Shock / Sinblaze)"], ["P2 Diamantenstaub", "(Diamond Dust)"], ["P2 Überflutendes Licht – Fluch", "des Lichts", "(Light Rampant – Refulgent Fate)"], ["P1 Brandschlag/Todesmal", "(Burnt Strike / Fated Burn Mark)"], ["P2 Überflutendes Licht – Rest", "(Light Rampant –", "Towers/Puddles/Banish III)"], ["P1 Türme – Detonation", "(Towers – Unmitigated Explosion)"], ["P1 Stetes Pulvermal #1", "(Powder Mark Trail #1)"], ["P3 Fatale Relativität", "(Ultimate Relativity)"], ["P2 Spiegelland inkl. Verbannga", "(Mirror, Mirror incl. Banish", "III)"], ["P2 Absoluter Nullpunkt [DPS]", "(Absolute Zero)"], ["P1 Paradiestrennung /", "Erda-Detonation", "(Utopian Sky / Blasting Zone)"], ["P1 Stetes Pulvermal #2 + Blutung", "(Powder Mark Trail #2 +", "Bleeding)"]], "values": [40, 25, 22, 21, 20, 19, 17, 17, 15, 14, 13, 12]}, "deaths": {"labels": ["Kami (MT)", "Yashiro (OT)", "Freyja (H1)", "Sam (H2)", "Rinari (M1)", "Lunia (M2)", "Ayne (R1)", "Vincent (R2)"], "values": [2.38, 2.55, 1.62, 1.12, 1.58, 3.26, 1.21, 1.59], "colors": ["#4a90c3", "#7eb6e0", "#3dbe8c", "#7dd39a", "#e07a5f", "#e0b15c", "#c45c6c", "#d98b4a"]}}</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<script src="js/charts.js?v=b5da23b6c2"></script>
+<script src="js/charts.js?v=9f1912c536"></script>
 </body>
 </html>

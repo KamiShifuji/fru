@@ -8,13 +8,13 @@
   const grid = { color: '#1f2430' };
 
   const clear = document.getElementById('chartClear');
-  if (clear && data.clearProg) {
-    let bestIdx = -1, bestVal = -1;
-    data.clearProg.forEach(function (v, i) { if (v !== null && v !== undefined && v > bestVal) { bestVal = v; bestIdx = i; } });
+  if (clear && data.clearRest) {
+    let bestIdx = -1, bestVal = 101;
+    data.clearRest.forEach(function (v, i) { if (v !== null && v !== undefined && v < bestVal) { bestVal = v; bestIdx = i; } });
     const BEST_COL = '#3dd6c6';
-    const ptCol = data.clearProg.map(function (_, i) { return i === bestIdx ? BEST_COL : '#e0b15c'; });
-    const ptRad = data.clearProg.map(function (_, i) { return i === bestIdx ? 9 : 5; });
-    const ptBorder = data.clearProg.map(function (_, i) { return i === bestIdx ? '#ffffff' : '#090b10'; });
+    const ptCol = data.clearRest.map(function (_, i) { return i === bestIdx ? BEST_COL : '#e0b15c'; });
+    const ptRad = data.clearRest.map(function (_, i) { return i === bestIdx ? 9 : 5; });
+    const ptBorder = data.clearRest.map(function (_, i) { return i === bestIdx ? '#ffffff' : '#090b10'; });
     const bestMark = {
       id: 'bestMark',
       afterDatasetsDraw: function (chart) {
@@ -23,13 +23,13 @@
         if (!pt) return;
         const ctx = chart.ctx;
         const valTxt = String(bestVal).replace('.', ',') + ' %';
-        const txt = (chart.width < 520) ? ('Rekord ' + valTxt) : ('Rekord: ' + valTxt + ' (' + data.labels[bestIdx] + ')');
+        const txt = (chart.width < 520) ? ('Rekord: noch ' + valTxt) : ('Rekord: noch ' + valTxt + ' (' + data.labels[bestIdx] + ')');
         ctx.save();
         ctx.font = '700 12px "Segoe UI", system-ui, sans-serif';
         const w = ctx.measureText(txt).width + 14;
         let x = pt.x - w / 2;
         x = Math.max(chart.chartArea.left, Math.min(x, chart.chartArea.right - w));
-        const y = pt.y - 34;
+        const y = (pt.y + 34 > chart.chartArea.bottom - 4) ? pt.y - 34 : pt.y + 12;
         ctx.fillStyle = 'rgba(9,11,16,.85)';
         ctx.strokeStyle = BEST_COL;
         ctx.lineWidth = 1.2;
@@ -50,11 +50,12 @@
         if (!y || !area) return;
         const ctx = chart.ctx;
         const marks = [
-          [20, 'P2'],
-          [40, 'P3'],
-          [60, 'P4'],
-          [80, 'P5'],
-          [100, 'Clear']
+          [100, 'Start / P1'],
+          [80, 'P2'],
+          [60, 'P3'],
+          [40, 'P4'],
+          [20, 'P5'],
+          [0, 'Clear']
         ];
         ctx.save();
         marks.forEach(function (m) {
@@ -72,8 +73,9 @@
           ctx.fillStyle = lab === 'Clear' ? '#e0b15c' : '#9aa3b2';
           ctx.font = '600 11px "Segoe UI", system-ui, sans-serif';
           ctx.textAlign = 'right';
-          ctx.textBaseline = lab === 'Clear' ? 'top' : 'bottom';
-          ctx.fillText(lab, area.right - 3, lab === 'Clear' ? py + 3 : py - 3);
+          const below = (lab === 'Start / P1');
+          ctx.textBaseline = below ? 'top' : 'bottom';
+          ctx.fillText(lab, area.right - 3, below ? py + 3 : py - 3);
         });
         ctx.restore();
       }
@@ -83,12 +85,12 @@
       data: {
         labels: data.labels,
         datasets: [{
-          label: 'Bester Pull – Fortschritt zum Clear',
-          data: data.clearProg,
+          label: 'Bester Pull – noch bis zum Clear',
+          data: data.clearRest,
           borderColor: '#e0b15c',
           backgroundColor: 'rgba(224,177,92,.14)',
           tension: .25,
-          fill: true,
+          fill: 'origin',
           spanGaps: true,
           pointRadius: ptRad,
           pointHoverRadius: ptRad.map(function (r) { return r + 2; }),
@@ -113,13 +115,13 @@
                 const hp = data.bestBoss[i];
                 const pu = data.bestPull[i];
                 const hpTxt = (hp === null || hp === undefined) ? 'Boss-HP unbekannt' : (String(hp).replace('.', ',') + ' %');
-                return 'Fortschritt: ' + vTxt + (ph ? ' · ' + ph + ' · ' + hpTxt + ' (Pull ' + pu + ')' : '');
+                return 'Noch bis zum Clear: ' + vTxt + (ph ? ' · ' + ph + ' · ' + hpTxt + ' (Pull ' + pu + ')' : '');
               }
             }
           }
         },
         scales: {
-          y: { min: 0, max: 100, ticks: { callback: v => v + ' %' }, grid: grid, title: { display: true, text: 'Fortschritt zum Clear (höher = näher)' } },
+          y: { min: 0, max: 100, ticks: { callback: v => v + ' %' }, grid: grid, title: { display: true, text: 'Noch bis zum Clear (tiefer = näher)' } },
           x: { grid: { display: false } }
         }
       },
