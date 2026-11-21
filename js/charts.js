@@ -204,6 +204,104 @@
     });
   }
 
+  const sink = document.getElementById('chartSink');
+  if (sink && data.phaseSink && data.phaseSink.order && data.phaseSink.order.length) {
+    const sk = data.phaseSink;
+    const minLbl = function (sec) {
+      sec = Math.max(0, sec || 0);
+      if (sec < 30) {
+        const s = Math.round(sec);
+        return s ? (s + ' s') : '0 min';
+      }
+      const m = sec / 60;
+      const txt = (Math.round(m * 10) / 10).toFixed(1).replace(/\.0$/, '').replace('.', ',');
+      return txt + ' min';
+    };
+    const dePct = function (v) { return String(Math.round(v * 10) / 10).replace('.', ',') + ' %'; };
+    const sets = sk.order.map(function (lab) {
+      return {
+        label: lab,
+        key: lab,
+        data: sk.minutes[lab],
+        backgroundColor: (sk.fills && sk.fills[lab]) || ((sk.colors && sk.colors[lab]) || '#e0b15c'),
+        borderColor: (sk.colors && sk.colors[lab]) || '#e0b15c',
+        borderWidth: 0,
+        stack: 'phases',
+        maxBarThickness: 42
+      };
+    });
+    const maxMin = Math.max.apply(null, (sk.eveningSec || []).map(function (s) { return (s || 0) / 60; }).concat([0]));
+    const sinkLabels = {
+      id: 'sinkLabels',
+      afterDatasetsDraw: function (chart) {
+        const area = chart.chartArea;
+        const x = chart.scales.x;
+        const y = chart.scales.y;
+        if (!area || !x || !y) return;
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.font = '600 11px "Segoe UI", system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        (sk.sink || []).forEach(function (lab, i) {
+          if (!lab) return;
+          const tot = (sk.eveningSec[i] || 0) / 60;
+          if (tot <= 0) return;
+          const px = x.getPixelForValue(i);
+          const py = y.getPixelForValue(tot);
+          const col = (sk.colors && sk.colors[lab]) || '#e8eaed';
+          ctx.fillStyle = col;
+          ctx.fillText(lab, px, Math.max(area.top + 2, py - 4));
+        });
+        ctx.restore();
+      }
+    };
+    new Chart(sink, {
+      type: 'bar',
+      data: { labels: data.labels, datasets: sets },
+      plugins: [sinkLabels],
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        layout: { padding: { top: 18 } },
+        plugins: {
+          legend: { labels: { color: '#e8eaed', boxWidth: 14 } },
+          tooltip: {
+            callbacks: {
+              title: function (items) {
+                if (!items.length) return '';
+                const i = items[0].dataIndex;
+                const sinkLab = sk.sink[i];
+                return (data.labels[i] || '') + (sinkLab ? (' · Zeitfresser ' + sinkLab) : '');
+              },
+              label: function (item) {
+                const lab = item.dataset.key;
+                const i = item.dataIndex;
+                const sec = (sk.seconds[lab] || [])[i] || 0;
+                if (sec <= 0.05) return null;
+                const tot = sk.eveningSec[i] || 0;
+                const share = tot ? (100 * sec / tot) : ((sk.share[lab] || [])[i] || 0);
+                const mark = (sk.sink[i] === lab) ? 'Zeitfresser · ' : '';
+                return mark + lab + ': ' + minLbl(sec) + ' (' + dePct(share) + ')';
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            stacked: true,
+            min: 0,
+            suggestedMax: maxMin ? Math.ceil((maxMin * 1.12) / 10) * 10 : undefined,
+            ticks: { callback: function (v) { return v + ' min'; } },
+            grid: grid,
+            title: { display: true, text: 'Minuten aktiver Kampfzeit' }
+          },
+          x: { stacked: true, grid: { display: false } }
+        }
+      }
+    });
+  }
+
   const best = document.getElementById('chartBest');
   if (best && data.phaseHp) {
     const colors = data.phaseHpColors || { P1: '#e07a5f', P2: '#5b9bd5', P3: '#9b6bdb', P4: '#e0b15c', P5: '#3dbe8c' };
