@@ -173,8 +173,50 @@ td.cen, th.cen { text-align: center; }
 .ev:hover { border-color: var(--gold-dim); background: var(--bg-hover); }
 .ev .date { font-weight: 750; color: var(--gold); }
 .ev .wd { display: block; color: var(--muted); font-size: .8rem; font-weight: 600; }
-.ev .meta { color: var(--muted); font-size: .88rem; }
+.ev .meta { color: var(--muted); font-size: .88rem; min-width: 0; }
 .ev .best { font-weight: 650; color: var(--text); font-size: .92rem; text-align: right; }
+.ph-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.ph-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  border-radius: 999px;
+  padding: 2px 9px 2px 8px;
+  font-size: .78rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  border: 1px solid transparent;
+  background: var(--bg-elev-2);
+  white-space: nowrap;
+}
+.ph-chip .ph-k { font-weight: 750; }
+.ph-chip.p1 { color: var(--p1); border-color: rgba(224,122,95,.38); background: rgba(224,122,95,.14); }
+.ph-chip.p2 { color: var(--p2); border-color: rgba(91,155,213,.38); background: rgba(91,155,213,.14); }
+.ph-chip.p3 { color: var(--p3); border-color: rgba(155,107,219,.38); background: rgba(155,107,219,.14); }
+.ph-chip.p4 { color: var(--gold); border-color: rgba(224,177,92,.38); background: rgba(224,177,92,.14); }
+.ph-chip.p5 { color: var(--good); border-color: rgba(61,190,140,.38); background: rgba(61,190,140,.14); }
+.ph-chip.clear { color: #f3e6b8; border-color: rgba(243,230,184,.38); background: rgba(243,230,184,.12); }
+.ph-reach {
+  display: inline-flex;
+  align-items: center;
+  color: var(--faint);
+  font-size: .75rem;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-soft);
+  background: rgba(255,255,255,.03);
+  white-space: nowrap;
+}
+.stat .hint-ph { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+.stat .hint-ph .ph-row { gap: 5px; }
+.stat .hint-ph .ph-chip { font-size: .72rem; padding: 1px 8px; }
 .bars { display: flex; height: 8px; border-radius: 99px; overflow: hidden; background: #000; margin-top: 6px; max-width: 280px; }
 .bars > span { display: block; height: 100%; }
 .bars .p1 { background: var(--p1); } .bars .p2 { background: var(--p2); } .bars .p3 { background: var(--p3); }
@@ -412,6 +454,8 @@ svg.spark { display: block; margin-left: auto; }
   footer.site .foot-side { text-align: left; }
   .ev { grid-template-columns: 1fr; }
   .ev .best { text-align: left; }
+  .ph-chip, .ph-reach { font-size: .74rem; }
+  .ev .bars { max-width: 100%; }
   .chart-box { height: 280px; }
   .chart-box.short { height: 240px; }
   .chart-box.gantt { height: 260px; }
