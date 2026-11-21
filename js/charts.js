@@ -211,8 +211,18 @@
             callbacks: {
               label: function (ctx) {
                 const hp = ctx.raw;
+                const ph = ctx.dataset.label;
+                const rank = {P1: 1, P2: 2, P3: 3, P4: 4, P5: 5};
+                const i = ctx.dataIndex;
+                const later = present.some(function (other) {
+                  return (rank[other] || 0) > (rank[ph] || 0)
+                    && data.phaseHp[other] && data.phaseHp[other][i] !== null && data.phaseHp[other][i] !== undefined;
+                });
+                if (hp === 0 && later) {
+                  return ph + ' · 0 % (Phase an dem Abend geschafft)';
+                }
                 const hpTxt = (hp === null || hp === undefined) ? 'kein Wert' : (String(hp).replace('.', ',') + ' %');
-                return ctx.dataset.label + ' · niedrigste Boss-HP: ' + hpTxt;
+                return ph + ' · niedrigste Boss-HP: ' + hpTxt;
               }
             }
           }
