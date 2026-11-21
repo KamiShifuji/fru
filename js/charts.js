@@ -226,14 +226,97 @@
   }
 
   const phase = document.getElementById('chartPhase');
-  if (phase) {
-    new Chart(phase, {
-      type: 'doughnut',
-      data: { labels: data.phase.labels, datasets: [{ data: data.phase.values, backgroundColor: data.phase.colors, borderColor: '#12151c', borderWidth: 2 }] },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'right', labels: { color: '#e8eaed' } } }
+  if (phase && data.progDur && data.progDur.length) {
+    const rows = data.progDur;
+    const progDurLabels = {
+      id: 'progDurLabels',
+      afterDatasetsDraw: function (chart) {
+        const meta = chart.getDatasetMeta(0);
+        const ctx = chart.ctx;
+        const area = chart.chartArea;
+        if (!meta || !area) return;
+        ctx.save();
+        ctx.font = '700 12px "Segoe UI", system-ui, sans-serif';
+        ctx.textBaseline = 'middle';
+        meta.data.forEach(function (bar, i) {
+          const row = rows[i];
+          if (!row || !bar) return;
+          const txt = row.pulls + ' Pulls';
+          const tw = ctx.measureText(txt).width;
+          const x0 = Math.min(bar.x, bar.base);
+          const x1 = Math.max(bar.x, bar.base);
+          const mid = (x0 + x1) / 2;
+          const y = bar.y;
+          if (x1 - x0 > tw + 16) {
+            ctx.fillStyle = '#14161c';
+            ctx.textAlign = 'center';
+            ctx.fillText(txt, mid, y);
+          } else {
+            ctx.fillStyle = '#e8eaed';
+            let tx = x1 + 8;
+            if (tx + tw <= area.right - 2) {
+              ctx.textAlign = 'left';
+              ctx.fillText(txt, tx, y);
+            } else if (x0 - 8 - tw >= area.left) {
+              ctx.textAlign = 'right';
+              ctx.fillText(txt, x0 - 8, y);
+            }
+          }
+        });
+        ctx.restore();
       }
+    };
+    const maxH = Math.max.apply(null, rows.map(function (r) { return r.end_h; }));
+    new Chart(phase, {
+      type: 'bar',
+      data: {
+        labels: rows.map(function (r) { return r.phase; }),
+        datasets: [{
+          label: 'Prog-Dauer',
+          data: rows.map(function (r) { return [r.start_h, r.end_h]; }),
+          backgroundColor: rows.map(function (r) { return r.color; }),
+          borderWidth: 0,
+          borderRadius: 6,
+          borderSkipped: false,
+          barPercentage: 0.62,
+          categoryPercentage: 0.8
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: function (items) {
+                return rows[items[0].dataIndex].phase;
+              },
+              label: function (ctx) {
+                const r = rows[ctx.dataIndex];
+                const lines = [r.dur_label, r.pulls + ' Pulls'];
+                if (r.dates) lines.push(r.dates);
+                return lines;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 0,
+            suggestedMax: Math.max(1, Math.ceil(maxH * 2) / 2),
+            grid: grid,
+            title: { display: true, text: 'Stunden aktiver Kampfzeit', color: '#9aa3b2' },
+            ticks: { callback: function (v) { return String(v).replace('.', ',') + ' h'; } }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#e8eaed', font: { weight: '700', size: 13 } }
+          }
+        }
+      },
+      plugins: [progDurLabels]
     });
   }
 
