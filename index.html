@@ -22,12 +22,16 @@
 <meta name="twitter:title" content="Silly Rangers · FRU Prog">
 <meta name="twitter:description" content="Bester Pull: 51,7 % zum Clear · 277 Pulls · 13 Abende">
 <meta name="twitter:image" content="https://kamishifuji.github.io/fru/assets/og.jpg">
-<link rel="stylesheet" href="css/style.css?v=5b1f8180d4">
+<link rel="stylesheet" href="css/style.css?v=9793e01923">
 <script>
 (function () {
-  var map = {"phasen": "prog-dauer.html", "tode": "einzeltode.html", "ursachen": "mechaniken.html", "abende": "abende.html", "guides": "guides.html"};
-  var h = (location.hash || "").replace(/^#/, "");
-  if (map[h]) location.replace(map[h]);
+  var map = {"phasen": "index.html#prog-dauer", "tode": "einzeltode.html", "ursachen": "mechaniken.html", "abende": "abende.html", "guides": "guides.html"};
+  function go() {
+    var h = (location.hash || "").replace(/^#/, "");
+    if (map[h]) location.replace(map[h]);
+  }
+  go();
+  window.addEventListener("hashchange", go);
 })();
 </script>
 </head>
@@ -46,7 +50,6 @@
   </section>
 <nav class="toc" aria-label="Inhaltsverzeichnis">
     <a href="index.html" aria-current="page">Fortschritt</a>
-    <a href="prog-dauer.html">Prog-Dauer</a>
     <a href="einzeltode.html">Einzeltode</a>
     <a href="mechaniken.html">Mechaniken</a>
     <a href="fehler.html">Fehler-Analyse</a>
@@ -89,6 +92,12 @@
   <div class="card"><div class="chart-box"><canvas id="chartProgress" aria-label="Fortschritt über die Abende"></canvas></div></div>
   <div class="card"><div class="chart-box short"><canvas id="chartBest" aria-label="Niedrigste Boss-HP pro Phase und Abend"></canvas></div>
     <p class="fine">Pro Phase die niedrigste verbleibende Boss-HP aller Pulls, die an dem Abend in dieser Phase geendet haben (niedriger = weiter in der Phase). Abende ohne Pull in der Phase oder ohne bekannten HP-Wert bleiben eine Lücke und werden nicht verbunden. P4 und P5 erscheinen automatisch, sobald es dafür Daten gibt. Die Phasen sind getrennt, weil z.&nbsp;B. 41&nbsp;% in P3 weiter ist als 14&nbsp;% in P2.</p>
+  </div>
+
+  <h2 id="prog-dauer">Prog-Dauer pro Phase</h2>
+  <p class="note">In Stunden aktiver Kampfzeit (Summe der Pull-Dauern, ohne Pausen dazwischen). Jede Phase läuft von ihrer ersten Erreichung bis zur nächsten – P1 ab dem Start, die aktuelle Phase bis jetzt. Die Zahl im Balken ist die Anzahl der Pulls in diesem Abschnitt, auch wenn einzelne Pulls früher wipen. P4 und P5 kommen automatisch dazu, sobald ihr sie erreicht.</p>
+  <div class="card"><div class="chart-box gantt"><canvas id="chartPhase" aria-label="Prog-Dauer pro Phase in Stunden aktiver Kampfzeit"></canvas></div>
+    <p class="fine">Zum Vergleich, wo der Pull geendet hat, über alle 277 Static-Pulls: P1 141 (50,9 %), P2 109 (39,4 %), P3 27 (9,7 %).</p>
   </div>
 
   <details class="method">

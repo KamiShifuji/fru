@@ -96,7 +96,7 @@ header.top {
 .brand .sub { color: var(--muted); font-size: .82rem; }
 nav.toc {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 8px;
   margin: 0 0 1.7rem;
 }
@@ -129,13 +129,14 @@ nav.toc a[aria-current="page"] {
   box-shadow: 0 0 0 1px rgba(224,177,92,.25);
 }
 @media (max-width: 980px) {
-  nav.toc { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  nav.toc { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
   nav.toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   nav.toc a { font-size: .82rem; min-height: 40px; }
 }
 
+html { scroll-padding-top: 80px; }
 h1, h2, h3 { line-height: 1.25; letter-spacing: .01em; margin: 0 0 .4em; }
 h1 { font-size: clamp(1.5rem, 3vw, 2.05rem); font-weight: 750; }
 h2 { font-size: 1.25rem; margin-top: 2.2rem; padding-bottom: .35rem;
