@@ -131,14 +131,26 @@
 
   const prog = document.getElementById('chartProgress');
   if (prog) {
+    const reach = data.reach || { P2: data.p2, P3: data.p3 };
+    const reachOrder = data.reachOrder || Object.keys(reach);
+    const reachColors = data.reachColors || { P2: '#5b9bd5', P3: '#9b6bdb', P4: '#e0b15c', P5: '#3dbe8c', Clear: '#f3e6b8' };
+    const reachFills = data.reachFills || { P2: 'rgba(91,155,213,.15)', P3: 'rgba(155,107,219,.18)', P4: 'rgba(224,177,92,.18)', P5: 'rgba(61,190,140,.18)', Clear: 'rgba(243,230,184,.18)' };
+    const reachSets = reachOrder.filter(function (lab) { return reach[lab]; }).map(function (lab) {
+      return {
+        label: lab + ' erreicht %',
+        data: reach[lab],
+        borderColor: reachColors[lab] || '#e0b15c',
+        backgroundColor: reachFills[lab] || 'rgba(224,177,92,.18)',
+        tension: .25,
+        fill: true,
+        pointRadius: 4
+      };
+    });
     new Chart(prog, {
       type: 'line',
       data: {
         labels: data.labels,
-        datasets: [
-          { label: 'P2 erreicht %', data: data.p2, borderColor: '#5b9bd5', backgroundColor: 'rgba(91,155,213,.15)', tension: .25, fill: true, pointRadius: 4 },
-          { label: 'P3 erreicht %', data: data.p3, borderColor: '#9b6bdb', backgroundColor: 'rgba(155,107,219,.18)', tension: .25, fill: true, pointRadius: 4 }
-        ]
+        datasets: reachSets
       },
       options: {
         responsive: true, maintainAspectRatio: false,

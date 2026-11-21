@@ -177,6 +177,9 @@ td.cen, th.cen { text-align: center; }
 .bars { display: flex; height: 8px; border-radius: 99px; overflow: hidden; background: #000; margin-top: 6px; max-width: 280px; }
 .bars > span { display: block; height: 100%; }
 .bars .p1 { background: var(--p1); } .bars .p2 { background: var(--p2); } .bars .p3 { background: var(--p3); }
+.bars .p4 { background: var(--gold); } .bars .p5 { background: var(--good); } .bars .clear { background: #f3e6b8; }
+.dot.p4 { background: var(--gold); } .dot.p5 { background: var(--good); }
+.phase.Clear { color: var(--gold); }
 
 .death-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: .8rem;
