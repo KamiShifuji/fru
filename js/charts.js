@@ -194,13 +194,59 @@
         spanGaps: false,
         fill: false,
         pointRadius: 5,
+        pointHoverRadius: 7,
         pointBackgroundColor: colors[ph],
         pointBorderColor: '#090b10'
       };
     });
+    const phaseReachMarks = {
+      id: 'phaseReachMarks',
+      afterDraw: function (chart) {
+        const marks = data.phaseHpMarks || [];
+        if (!marks.length) return;
+        const x = chart.scales.x;
+        const area = chart.chartArea;
+        if (!x || !area) return;
+        const ctx = chart.ctx;
+        ctx.save();
+        marks.forEach(function (m, mi) {
+          const px = x.getPixelForValue(m.index);
+          if (px < area.left - 2 || px > area.right + 2) return;
+          ctx.beginPath();
+          ctx.setLineDash([5, 4]);
+          ctx.strokeStyle = m.color || 'rgba(255,255,255,.28)';
+          ctx.globalAlpha = 0.85;
+          ctx.lineWidth = 1.2;
+          ctx.moveTo(px, area.top);
+          ctx.lineTo(px, area.bottom);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.globalAlpha = 1;
+          ctx.font = '600 11px "Segoe UI", system-ui, sans-serif';
+          const txt = m.label;
+          const tw = ctx.measureText(txt).width + 12;
+          let lx = px - tw / 2;
+          lx = Math.max(area.left + 1, Math.min(lx, area.right - tw - 1));
+          let ty = area.top + 6 + (mi * 22);
+          if (ty + 18 > area.bottom) ty = area.bottom - 20;
+          ctx.fillStyle = 'rgba(9,11,16,.88)';
+          ctx.strokeStyle = m.color || '#9aa3b2';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          if (ctx.roundRect) { ctx.roundRect(lx, ty, tw, 18, 5); } else { ctx.rect(lx, ty, tw, 18); }
+          ctx.fill(); ctx.stroke();
+          ctx.fillStyle = m.color || '#9aa3b2';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(txt, lx + 6, ty + 9);
+        });
+        ctx.restore();
+      }
+    };
     new Chart(best, {
       type: 'line',
       data: { labels: data.labels, datasets: datasets },
+      plugins: [phaseReachMarks],
       options: {
         responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
@@ -208,21 +254,18 @@
           title: { display: true, text: legendTitle, color: '#e8eaed', font: { size: 13, weight: '600' } },
           legend: { labels: { color: '#e8eaed' } },
           tooltip: {
+            filter: function (ctx) {
+              return ctx.raw !== null && ctx.raw !== undefined;
+            },
             callbacks: {
+              title: function (items) {
+                return items.length ? items[0].label : '';
+              },
               label: function (ctx) {
                 const hp = ctx.raw;
-                const ph = ctx.dataset.label;
-                const rank = {P1: 1, P2: 2, P3: 3, P4: 4, P5: 5};
-                const i = ctx.dataIndex;
-                const later = present.some(function (other) {
-                  return (rank[other] || 0) > (rank[ph] || 0)
-                    && data.phaseHp[other] && data.phaseHp[other][i] !== null && data.phaseHp[other][i] !== undefined;
-                });
-                if (hp === 0 && later) {
-                  return ph + ' · 0 % (Phase an dem Abend geschafft)';
-                }
-                const hpTxt = (hp === null || hp === undefined) ? 'kein Wert' : (String(hp).replace('.', ',') + ' %');
-                return ph + ' · niedrigste Boss-HP: ' + hpTxt;
+                if (hp === null || hp === undefined) return null;
+                const hpTxt = String(hp).replace('.', ',') + ' %';
+                return ctx.dataset.label + ' · ' + hpTxt;
               }
             }
           }
