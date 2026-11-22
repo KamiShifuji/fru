@@ -644,3 +644,6 @@ svg.spark { display: block; margin-left: auto; }
 /* Prog-Point-Rahmen pro Slot (datengetrieben) */
 .pp-1{--acc:var(--ur)} .pp-2{--acc:var(--ap)} .pp-old{--acc:#8f9bb3}
 .p3old{margin:8px 0 18px}
+
+.admin-link { opacity: .4; font-size: .82rem; }
+.admin-link:hover { opacity: .85; }

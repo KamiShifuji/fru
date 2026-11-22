@@ -1,9 +1,9 @@
 {
-  "stand": "21.11.2026",
-  "n_pulls": 428,
-  "n_evenings": 19,
+  "stand": "22.11.2026",
+  "n_pulls": 440,
+  "n_evenings": 20,
   "from": "01.10.2026",
-  "to": "19.11.2026",
+  "to": "22.11.2026",
   "best": "P3 · 41,6 % Pull 10 15.11",
   "furthest": "P3",
   "pages": [
@@ -14,6 +14,7 @@
     "fehler.html",
     "abende.html",
     "guides.html",
+    "admin/index.html",
     "abende/2026-10-01.html",
     "abende/2026-10-04.html",
     "abende/2026-10-06.html",
@@ -32,7 +33,8 @@
     "abende/2026-11-12.html",
     "abende/2026-11-15.html",
     "abende/2026-11-17.html",
-    "abende/2026-11-19.html"
+    "abende/2026-11-19.html",
+    "abende/2026-11-22.html"
   ],
   "site": "Silly Rangers",
   "pdf_evenings": {},
@@ -79,6 +81,7 @@
     "Wf4G: 28 Pulls am 11.10 20:10 – So, 7/8 Stammspieler",
     "bf4Q: 25 Pulls am 22.10 20:05 – Do, 7/8 Stammspieler",
     "ztqR: 24 Pulls am 27.10 20:03 – Di, 7/8 Stammspieler",
-    "7846: 19 Pulls am 10.11 20:05 – Di, 8/8 Stammspieler"
+    "7846: 19 Pulls am 10.11 20:05 – Di, 8/8 Stammspieler",
+    "D8MA: 12 Pulls am 22.11 20:04 – So, 8/8 Stammspieler"
   ]
 }
