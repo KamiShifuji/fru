@@ -1,5 +1,5 @@
 {
-  "stand": "22.11.2026",
+  "stand": "26.11.2026",
   "n_pulls": 440,
   "n_evenings": 20,
   "from": "01.10.2026",
@@ -37,7 +37,9 @@
     "abende/2026-11-22.html"
   ],
   "site": "Silly Rangers",
-  "pdf_evenings": {},
+  "pdf_evenings": {
+    "2026-11-22": "FRU_Abend_2026-11-22.pdf"
+  },
   "api_changes": [
     [
       "ZFP7",

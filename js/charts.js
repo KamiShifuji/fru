@@ -129,80 +129,6 @@
     });
   }
 
-  const prog = document.getElementById('chartProgress');
-  if (prog && data.phaseTime && data.phaseTime.order && data.phaseTime.order.length) {
-    const pt = data.phaseTime;
-    const timeLbl = function (sec) {
-      sec = Math.round(sec || 0);
-      const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60);
-      if (h) return h + ' h ' + String(m).padStart(2, '0') + ' min';
-      return m + ' min';
-    };
-    const dePct = function (v) { return String(Math.round(v * 10) / 10).replace('.', ',') + ' %'; };
-    const sets = pt.order.map(function (lab, idx) {
-      const share = pt.share[lab];
-      const shareTxt = (share === null || share === undefined) ? '' : ' (' + String(share).replace('.', ',') + ' %)';
-      return {
-        label: lab + ' · ' + (pt.label[lab] || '') + shareTxt,
-        key: lab,
-        data: pt.hours[lab],
-        borderColor: (pt.colors && pt.colors[lab]) || '#e0b15c',
-        backgroundColor: (pt.fills && pt.fills[lab]) || 'rgba(224,177,92,.55)',
-        tension: .2,
-        fill: idx === 0 ? 'origin' : '-1',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        borderWidth: 2
-      };
-    });
-    new Chart(prog, {
-      type: 'line',
-      data: { labels: data.labels, datasets: sets },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { labels: { color: '#e8eaed', boxWidth: 14 } },
-          tooltip: {
-            callbacks: {
-              title: function (items) {
-                return items.length ? (data.labels[items[0].dataIndex] || '') : '';
-              },
-              label: function (item) {
-                const lab = item.dataset.key;
-                const i = item.dataIndex;
-                const sec = (pt.seconds[lab] || [])[i] || 0;
-                const tot = pt.order.reduce(function (s, l) { return s + ((pt.seconds[l] || [])[i] || 0); }, 0);
-                const share = tot ? (100 * sec / tot) : 0;
-                return lab + ': ' + timeLbl(sec) + ' kumuliert (' + dePct(share) + ')';
-              },
-              afterBody: function (items) {
-                if (!items.length) return '';
-                const i = items[0].dataIndex;
-                return pt.order.map(function (lab) {
-                  const add = (pt.addedSec[lab] || [])[i] || 0;
-                  const n = (pt.addedPulls[lab] || [])[i] || 0;
-                  if (!add && !n) return null;
-                  const pw = n === 1 ? 'Pull' : 'Pulls';
-                  return 'an diesem Abend ' + lab + ': ' + timeLbl(add) + ' · ' + n + ' ' + pw;
-                }).filter(Boolean);
-              }
-            }
-          }
-        },
-        scales: {
-          y: {
-            stacked: true,
-            min: 0,
-            ticks: { callback: function (v) { return String(v).replace('.', ',') + ' h'; } },
-            grid: grid,
-            title: { display: true, text: 'Stunden aktiver Kampfzeit (kumuliert)' }
-          },
-          x: { stacked: true, grid: { display: false } }
-        }
-      }
-    });
-  }
 
   const sink = document.getElementById('chartSink');
   if (sink && data.phaseSink && data.phaseSink.order && data.phaseSink.order.length) {
@@ -403,98 +329,48 @@
     });
   }
 
-  const phase = document.getElementById('chartPhase');
-  if (phase && data.progDur && data.progDur.length) {
-    const rows = data.progDur;
-    const progDurLabels = {
-      id: 'progDurLabels',
-      afterDatasetsDraw: function (chart) {
-        const meta = chart.getDatasetMeta(0);
-        const ctx = chart.ctx;
-        const area = chart.chartArea;
-        if (!meta || !area) return;
-        ctx.save();
-        ctx.font = '700 12px "Segoe UI", system-ui, sans-serif';
-        ctx.textBaseline = 'middle';
-        meta.data.forEach(function (bar, i) {
-          const row = rows[i];
-          if (!row || !bar) return;
-          const txt = row.pulls + ' Pulls';
-          const tw = ctx.measureText(txt).width;
-          const x0 = Math.min(bar.x, bar.base);
-          const x1 = Math.max(bar.x, bar.base);
-          const mid = (x0 + x1) / 2;
-          const y = bar.y;
-          if (x1 - x0 > tw + 16) {
-            ctx.fillStyle = '#14161c';
-            ctx.textAlign = 'center';
-            ctx.fillText(txt, mid, y);
-          } else {
-            ctx.fillStyle = '#e8eaed';
-            let tx = x1 + 8;
-            if (tx + tw <= area.right - 2) {
-              ctx.textAlign = 'left';
-              ctx.fillText(txt, tx, y);
-            } else if (x0 - 8 - tw >= area.left) {
-              ctx.textAlign = 'right';
-              ctx.fillText(txt, x0 - 8, y);
-            }
-          }
-        });
-        ctx.restore();
-      }
+  const avoid = document.getElementById('chartAvoid');
+  if (avoid && data.avoidable && data.avoidable.order && data.avoidable.order.length) {
+    const av = data.avoidable;
+    const cols = {
+      apoc: '#9b6bdb', feuga: '#e07a5f', eruption: '#d46aa8',
+      spirit: '#5b9bd5', icicle: '#6ec9d1', bow: '#e0b15c'
     };
-    const maxH = Math.max.apply(null, rows.map(function (r) { return r.end_h; }));
-    new Chart(phase, {
+    const sets = av.order.map(function (k) {
+      return {
+        label: av.names[k] || k,
+        data: av.hits[k] || [],
+        backgroundColor: cols[k] || '#6b7382',
+        borderWidth: 0,
+        stack: 'av'
+      };
+    });
+    new Chart(avoid, {
       type: 'bar',
-      data: {
-        labels: rows.map(function (r) { return r.phase; }),
-        datasets: [{
-          label: 'Prog-Dauer',
-          data: rows.map(function (r) { return [r.start_h, r.end_h]; }),
-          backgroundColor: rows.map(function (r) { return r.color; }),
-          borderWidth: 0,
-          borderRadius: 6,
-          borderSkipped: false,
-          barPercentage: 0.62,
-          categoryPercentage: 0.8
-        }]
-      },
+      data: { labels: data.labels, datasets: sets },
       options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { display: false },
+          legend: { labels: { color: '#e8eaed', boxWidth: 14 } },
           tooltip: {
             callbacks: {
-              title: function (items) {
-                return rows[items[0].dataIndex].phase;
-              },
-              label: function (ctx) {
-                const r = rows[ctx.dataIndex];
-                const lines = [r.dur_label, r.pulls + ' Pulls'];
-                if (r.dates) lines.push(r.dates);
-                return lines;
+              footer: function (items) {
+                if (!items.length) return '';
+                const i = items[0].dataIndex;
+                const sum = av.order.reduce(function (s, k) {
+                  return s + ((av.hits[k] || [])[i] || 0);
+                }, 0);
+                return 'Summe: ' + sum + ' vermeidbare Treffer';
               }
             }
           }
         },
         scales: {
-          x: {
-            min: 0,
-            suggestedMax: Math.max(1, Math.ceil(maxH * 2) / 2),
-            grid: grid,
-            title: { display: true, text: 'Stunden aktiver Kampfzeit', color: '#9aa3b2' },
-            ticks: { callback: function (v) { return String(v).replace('.', ',') + ' h'; } }
-          },
-          y: {
-            grid: { display: false },
-            ticks: { color: '#e8eaed', font: { weight: '700', size: 13 } }
-          }
+          y: { stacked: true, min: 0, ticks: { precision: 0 }, grid: grid, title: { display: true, text: 'vermeidbare Treffer' } },
+          x: { stacked: true, grid: { display: false } }
         }
-      },
-      plugins: [progDurLabels]
+      }
     });
   }
 

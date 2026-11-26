@@ -77,6 +77,12 @@
     return '<span class="' + cls + '">' + enc(deNum(t.early, 2) + ' → ' + deNum(t.late, 2) + ' ' + arrow) + '</span>';
   }
 
+  function rateCell(c) {
+    if (!c || !c.attempts) return '<span class="fine">–</span>';
+    const pct = (c.pct == null) ? '' : ' (' + enc(deNum(c.pct, 1)) + ' %)';
+    return enc(c.fails + '/' + c.attempts) + pct;
+  }
+
   function render(data) {
     const dash = document.getElementById('dash');
     const gate = document.getElementById('gate');
@@ -85,26 +91,24 @@
     html += '<p class="kicker">Silly Rangers · intern</p>';
     html += '<h1>Personenbezogene Auswertung</h1>';
     html += '<p class="admin-note">' + enc((data.n_pulls || '') + ' Pulls · ' + (data.n_evenings || '') + ' Abende · Stand ' + (data.stand || '')) +
+      ' · ' + enc(data.n_wipes || 0) + ' Wipes mit erstem Fehler' +
       ' · <a href="#" id="admin-logout">Abmelden</a></p>';
 
-    html += '<h2>Übersicht Stammspieler</h2>';
+    html += '<h2>Wipe verursacht (erster Fehler)</h2>';
     html += '<div class="card tight"><div class="table-wrap"><table class="admin-t"><thead><tr>' +
-      '<th>Spieler</th><th>Pos.</th><th class="num">Pulls</th><th class="num">Einzeltode</th><th class="num">/10</th>' +
-      '<th class="num">Fehler</th><th class="num">/10</th><th class="num">unverschuldet</th>' +
-      '<th>Trend Fehler</th><th>Trend Einzeltode</th></tr></thead><tbody>';
+      '<th>Spieler</th><th>Pos.</th><th class="num">Pulls</th><th class="num">Wipes verursacht</th><th class="num">/10 Pulls</th>' +
+      '<th>Trend</th></tr></thead><tbody>';
     players.forEach(function (p) {
       html += '<tr><td>' + enc(p.name) + '</td><td>' + enc(p.role) + '</td>' +
         '<td class="num">' + enc(p.pulls) + '</td>' +
-        '<td class="num">' + enc(p.indiv) + '</td><td class="num">' + enc(deNum(p.indiv_rate, 2)) + '</td>' +
-        '<td class="num">' + enc(p.errors) + '</td><td class="num">' + enc(deNum(p.error_rate, 2)) + '</td>' +
-        '<td class="num">' + enc(p.unv) + '</td>' +
-        '<td>' + trendHtml(p.trend_errors, true) + '</td>' +
-        '<td>' + trendHtml(p.trend_indiv, true) + '</td></tr>';
+        '<td class="num">' + enc(p.wipes) + '</td>' +
+        '<td class="num">' + enc(deNum(p.wipe_rate, 2)) + '</td>' +
+        '<td>' + trendHtml(p.trend_wipes, true) + '</td></tr>';
     });
     html += '</tbody></table></div></div>';
-    html += '<p class="admin-note">Trend: letzte 3 Abende mit Anwesenheit gegen alle davor. Pfeil nach oben = mehr (schlechter).</p>';
+    html += '<p class="admin-note">Zählt den ersten Fehler im Pull, nicht den letzten Tod. Trend: letzte 3 Abende mit Anwesenheit gegen alle davor. Pfeil nach oben = mehr (schlechter).</p>';
 
-    html += '<h2>Fehlerquote über die Abende</h2>';
+    html += '<h2>Wipe-Ursachen über die Abende</h2>';
     html += '<div class="card"><div class="chart-box tall"><canvas id="adminChart"></canvas></div></div>';
 
     html += '<h2>Pro Abend und Spieler</h2>';
@@ -116,31 +120,28 @@
       players.forEach(function (p) {
         const ev = (p.by_evening || [])[i] || {};
         if (!ev.pulls) { html += '<td class="num">–</td>'; return; }
-        const bits = ev.errors + ' F / ' + ev.indiv + ' E';
-        html += '<td class="num" title="' + enc('Fehler ' + ev.errors + ', Einzeltode ' + ev.indiv + ', Pulls ' + ev.pulls) + '">' +
-          enc(bits) + (ev.rate != null ? '<div class="fine">' + enc(deNum(ev.rate, 1)) + '/10</div>' : '') + '</td>';
+        html += '<td class="num" title="' + enc('Wipes verursacht ' + ev.wipes + ', Pulls ' + ev.pulls) + '">' +
+          enc(ev.wipes) + (ev.rate != null ? '<div class="fine">' + enc(deNum(ev.rate, 1)) + '/10</div>' : '') + '</td>';
       });
       html += '</tr>';
     });
     html += '</tbody></table></div></div>';
-    html += '<p class="admin-note">Zelle: Fehler / Einzeltode. Darunter Fehlerquote pro 10 Pulls.</p>';
+    html += '<p class="admin-note">Zelle: Wipes verursacht an dem Abend. Darunter Quote pro 10 Pulls.</p>';
 
-    html += '<h2>Spieler × Mechanik (verschuldete Fehler)</h2>';
+    html += '<h2>Fail-Rate pro Mechanik je Versuch</h2>';
     const cols = data.matrix_cols || [];
     html += '<div class="card tight"><div class="table-wrap"><table class="admin-t"><thead><tr><th>Spieler</th>';
     cols.forEach(function (c) { html += '<th class="num">' + enc(c) + '</th>'; });
-    html += '<th class="num">Summe</th></tr></thead><tbody>';
+    html += '</tr></thead><tbody>';
     (data.matrix || []).forEach(function (row) {
-      let sum = 0;
       html += '<tr><td>' + enc(row.name) + ' <span class="fine">' + enc(row.role) + '</span></td>';
       cols.forEach(function (c) {
-        const n = (row.cells || {})[c] || 0;
-        sum += n;
-        html += '<td class="num">' + (n ? enc(n) : '') + '</td>';
+        html += '<td class="num">' + rateCell((row.cells || {})[c]) + '</td>';
       });
-      html += '<td class="num">' + enc(sum) + '</td></tr>';
+      html += '</tr>';
     });
     html += '</tbody></table></div></div>';
+    html += '<p class="admin-note">Zelle: Fehler / Versuche (Prozent). Ein Versuch zählt, wenn der Spieler die Mechanik in dem Pull noch erlebt hat. Folgetode und unverschuldete Tode sind raus.</p>';
 
     html += '<h2>Wipe-Verursacher pro Abend</h2>';
     (data.wipes || []).forEach(function (ev) {
@@ -150,11 +151,11 @@
         return;
       }
       html += '<div class="card tight"><div class="table-wrap"><table class="admin-t"><thead><tr>' +
-        '<th>Pull</th><th>Mechanik</th><th>Spieler</th><th>Todesstoß</th><th>Hinweis</th></tr></thead><tbody>';
+        '<th>Pull</th><th>Zeit</th><th>Mechanik</th><th>Spieler</th><th>Todesstoß</th><th>Hinweis</th></tr></thead><tbody>';
       ev.wipes.forEach(function (w) {
-        html += '<tr><td class="num">' + enc(w.pull) + '</td><td>' + enc(w.mech) + '</td><td>' +
-          enc((w.players || []).join(', ')) + '</td><td>' + enc(w.ab || '–') + '</td><td>' +
-          (w.unv ? 'erster Tod unverschuldet' : '') + '</td></tr>';
+        const hint = [w.conf, w.reason].filter(Boolean).join(' · ');
+        html += '<tr><td class="num">' + enc(w.pull) + '</td><td class="num">' + enc(w.t || '–') + '</td><td>' + enc(w.mech) + '</td><td>' +
+          enc((w.players || []).join(', ')) + '</td><td>' + enc(w.ab || '–') + '</td><td>' + enc(hint) + '</td></tr>';
       });
       html += '</tbody></table></div></div>';
     });
@@ -205,7 +206,7 @@
           interaction: { mode: 'index', intersect: false },
           plugins: { legend: { labels: { color: '#e8eaed', boxWidth: 12 } } },
           scales: {
-            y: { min: 0, title: { display: true, text: 'Fehler pro 10 Pulls' }, ticks: { color: '#9aa3b2' }, grid: { color: 'rgba(255,255,255,.06)' } },
+            y: { min: 0, title: { display: true, text: 'Wipes verursacht pro 10 Pulls' }, ticks: { color: '#9aa3b2' }, grid: { color: 'rgba(255,255,255,.06)' } },
             x: { ticks: { color: '#9aa3b2' }, grid: { display: false } }
           }
         }
