@@ -83,7 +83,7 @@
     return enc(c.fails + '/' + c.attempts) + pct;
   }
 
-  function render(data) {
+  function goStats(data) {
     const dash = document.getElementById('dash');
     const gate = document.getElementById('gate');
     const players = data.players || [];
@@ -163,7 +163,11 @@
     if (data.notes && data.notes.length) {
       html += '<h2>Hinweise</h2><ul>' + data.notes.map(function (n) { return '<li>' + enc(n) + '</li>'; }).join('') + '</ul>';
     }
-    html += '<p><a href="../index.html">Zur öffentlichen Seite</a></p>';
+    html += '<p><a href="../index.html">Zur öffentlichen Seite</a>';
+    if (data.roast) {
+      html += ' · <a href="#protokoll" class="roast-link" id="admin-roast-link">Internes Protokoll</a>';
+    }
+    html += '</p>';
 
     dash.innerHTML = html;
     dash.classList.add('on');
@@ -175,8 +179,66 @@
       try { sessionStorage.removeItem(SS_KEY); } catch (e) {}
       location.reload();
     });
+    const rl = document.getElementById('admin-roast-link');
+    if (rl) rl.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      try { history.replaceState(null, '', '#protokoll'); } catch (e) {}
+      goRoast(data);
+    });
 
     drawChart(data);
+  }
+
+  function goRoast(data) {
+    const dash = document.getElementById('dash');
+    const gate = document.getElementById('gate');
+    const roast = data.roast || {};
+    let html = '';
+    html += '<p class="kicker">' + enc(roast.kicker || 'Silly Rangers · intern') + '</p>';
+    html += '<h1>' + enc(roast.title || 'Internes Protokoll') + '</h1>';
+    html += '<p class="admin-note">Stand ' + enc(data.stand || '') +
+      ' · <a href="#auswertung" id="admin-roast-back">Zurück zur Auswertung</a>' +
+      ' · <a href="#" id="admin-logout">Abmelden</a></p>';
+    if (roast.intro) html += '<p>' + enc(roast.intro) + '</p>';
+    if (roast.board && roast.board.length) {
+      html += '<h2>An der Tafel</h2><div class="card tight"><ul class="roast-board">';
+      roast.board.forEach(function (b) {
+        html += '<li><strong>' + enc(b.title) + ':</strong> ' + enc(b.line) + '</li>';
+      });
+      html += '</ul></div>';
+    }
+    (roast.players || []).forEach(function (p) {
+      html += '<article class="card roast-card">';
+      html += '<h2>' + enc(p.name) + ' <span class="fine">' + enc(p.role) + '</span></h2>';
+      if (p.award) html += '<div class="roast-award">' + enc(p.award) + '</div>';
+      (p.body || []).forEach(function (para) { html += '<p>' + enc(para) + '</p>'; });
+      html += '</article>';
+    });
+    if (roast.footer) html += '<p class="admin-note">' + enc(roast.footer) + '</p>';
+    html += '<p><a href="#auswertung" id="admin-roast-back2">Zurück zur Auswertung</a></p>';
+    dash.innerHTML = html;
+    dash.classList.add('on');
+    if (gate) gate.classList.add('off');
+    function toStats(ev) {
+      ev.preventDefault();
+      try { history.replaceState(null, '', '#auswertung'); } catch (e) {}
+      goStats(data);
+    }
+    ['admin-roast-back', 'admin-roast-back2'].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', toStats);
+    });
+    const lo = document.getElementById('admin-logout');
+    if (lo) lo.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      try { sessionStorage.removeItem(SS_KEY); } catch (e) {}
+      location.reload();
+    });
+  }
+
+  function render(data) {
+    if (location.hash === '#protokoll' && data.roast) goRoast(data);
+    else goStats(data);
   }
 
   function drawChart(data) {
